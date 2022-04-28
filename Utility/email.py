@@ -7,7 +7,7 @@ class email():
     def __init__(self):
         self.senderEmail = "centrosportivofake@gmail.com"
         self.server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
-        self.server.login(self.senderEmail, "afjsofjosfjsfosojifwo")
+        self.server.login(self.senderEmail, "dsfds")
 
     def emailScadenzaAbbonamento(self, email, nome, cognome):
         recEmail = email
