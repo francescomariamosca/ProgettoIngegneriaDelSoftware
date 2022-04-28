@@ -106,19 +106,29 @@ class ControllerUtente(QMainWindow):
             self.passaInserisciUtente()
 
     def creaUtente(self):
-        if self.utenteView.inserisciUtente.password.text() == self.utenteView.inserisciUtente.confermapassword.text():
-            insertQuery = "INSERT INTO sicurezza VALUES ('%s', '%s', '%s')" % (''.join(self.utenteView.inserisciUtente.username.text()),
+        query = "SELECT nome_utente from sicurezza where nome_utente = '%s' " % (''.join(self.utenteView.inserisciUtente.username.text()))
+        self.utenteModel.c.execute(query)
+        print("fatto")
+        result = self.utenteModel.c.fetchone()
+        print(result)
+
+        if result == None:
+
+            if self.utenteView.inserisciUtente.password.text() == self.utenteView.inserisciUtente.confermapassword.text():
+                insertQuery = "INSERT INTO sicurezza VALUES ('%s', '%s', '%s')" % (''.join(self.utenteView.inserisciUtente.username.text()),
                                                                                ''.join(self.utenteView.inserisciUtente.password.text()),
                                                                                ''.join(self.list[0]))
-            self.utenteModel.c.execute(insertQuery)
-            self.utenteModel.conn.commit()
+                self.utenteModel.c.execute(insertQuery)
+                self.utenteModel.conn.commit()
 
-            updateDip = "UPDATE Dipendenti SET username = '%s' WHERE cf ='%s' " % (''.join(self.utenteView.inserisciUtente.username.text()),
+                updateDip = "UPDATE Dipendenti SET username = '%s' WHERE cf ='%s' " % (''.join(self.utenteView.inserisciUtente.username.text()),
                                                                                    ''.join(self.list[0]))
-            self.list.clear()
-            self.utenteModel.c.execute(updateDip)
-            self.utenteModel.conn.commit()
-            self.utenteView.correttoInserimento()
+                self.list.clear()
+                self.utenteModel.c.execute(updateDip)
+                self.utenteModel.conn.commit()
+                self.utenteView.correttoInserimento()
 
+            else:
+                self.utenteView.warnInserimento()
         else:
-            self.utenteView.warnInserimento()
+            self.utenteView.warnUtenteEsistente()

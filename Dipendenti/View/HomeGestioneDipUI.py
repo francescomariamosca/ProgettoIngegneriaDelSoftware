@@ -10,14 +10,14 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from Dipendenti.Model.ModelDipendente import ModelDipendente
+from GesitoneDatabase.QueryGestioneDipendenti.TableDipendenti import TableDipendenti
 
 
 class HomeGestioneDipUI(object):
     def setupUi(self, MainWindow):
-        self.dipModel = ModelDipendente()
+        self.tableDip = TableDipendenti()
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1147, 522)
+        MainWindow.resize(1907, 1202)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
@@ -223,13 +223,26 @@ class HomeGestioneDipUI(object):
         item.setText(_translate("MainWindow", "Username"))
         self.modificainfodip.setText(_translate("MainWindow", "Modifica Info Dipendente"))
         self.eliminadip.setText(_translate("MainWindow", " Elimina Dipendente"))
+        self.tabelladip.setColumnWidth(0, 200)
+        self.tabelladip.setColumnWidth(1, 200)
+        self.tabelladip.setColumnWidth(2, 230)
+        self.tabelladip.setColumnWidth(3, 200)
+        self.tabelladip.setColumnWidth(4, 200)
+        self.tabelladip.setColumnWidth(5, 200)
+        self.tabelladip.setColumnWidth(6, 150)
+        self.tabelladip.setColumnWidth(7, 240)
+        self.tabelladip.setColumnWidth(8, 200)
+
+
+
 
     def loadData(self):
         subquery = "SELECT * FROM Dipendenti"
         rowindex = 0
 
-        self.tabelladip.setRowCount(30 )
-        for row in self.dipModel.c.execute(subquery):
+        self.tabelladip.setRowCount(30)
+
+        for row in self.tableDip.c.execute(subquery):
             self.tabelladip.setItem(rowindex, 0, QtWidgets.QTableWidgetItem(row[0]))
             self.tabelladip.setItem(rowindex, 1, QtWidgets.QTableWidgetItem(row[1]))
             self.tabelladip.setItem(rowindex, 2, QtWidgets.QTableWidgetItem(row[2]))
@@ -247,7 +260,7 @@ class HomeGestioneDipUI(object):
 
             rowindex += 1
 
-        self.dipModel.conn.commit()
+        self.tableDip.conn.commit()
 
 
 

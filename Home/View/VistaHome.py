@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'VistaHome.ui'
+# Form implementation generated from reading ui file 'VistaHomeFinale.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -12,6 +12,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 from Campi.Controller.ControllerCampi import ControllerCampi
 from Dipendenti.Controller.ControllerDipendente import ControllerDipendente
+from Fornitori.Controller.ControllerFornitori import ControllerFornitori
+from Liquidita.Controller.ControllerLiquidita import ControllerLiquidita
 from Sicurezza.GestioneUtente.Controller.ControllerUtente import ControllerUtente
 from Soci.Controller.ControllerSocio import ControllerSocio
 from Utility import source
@@ -24,10 +26,13 @@ class VistaHome(object):
         self.controllerSoci = ControllerSocio(home)
         self.controllerUtente = ControllerUtente(home)
         self.controllerCampi = ControllerCampi(home)
+        self.controllerLiquidita = ControllerLiquidita(home)
+        self.controllerFornitori = ControllerFornitori(home)
+
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1198, 775)
+        MainWindow.resize(1202, 784)
         MainWindow.setStyleSheet("")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -52,11 +57,64 @@ class VistaHome(object):
         self.label.setText("")
         self.label.setObjectName("label")
         self.gridLayoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.gridLayoutWidget.setGeometry(QtCore.QRect(70, 360, 1001, 161))
+        self.gridLayoutWidget.setGeometry(QtCore.QRect(70, 360, 1081, 261))
         self.gridLayoutWidget.setObjectName("gridLayoutWidget")
         self.gridLayout = QtWidgets.QGridLayout(self.gridLayoutWidget)
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
         self.gridLayout.setObjectName("gridLayout")
+        self.dipendenti = QtWidgets.QPushButton(self.gridLayoutWidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.dipendenti.sizePolicy().hasHeightForWidth())
+        self.dipendenti.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setFamily("Yu Gothic UI Semibold")
+        font.setPointSize(18)
+        font.setBold(True)
+        font.setWeight(75)
+        self.dipendenti.setFont(font)
+        self.dipendenti.setStyleSheet("border-radius: 20px;\n"
+"background-color: rgb(221, 214, 73);\n"
+"border: 3px solid white;\n"
+"")
+        self.dipendenti.setObjectName("dipendenti")
+        self.gridLayout.addWidget(self.dipendenti, 2, 0, 1, 1)
+        self.soci = QtWidgets.QPushButton(self.gridLayoutWidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.soci.sizePolicy().hasHeightForWidth())
+        self.soci.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setFamily("Yu Gothic UI Semibold")
+        font.setPointSize(18)
+        font.setBold(True)
+        font.setWeight(75)
+        self.soci.setFont(font)
+        self.soci.setStyleSheet("border-radius: 20px;\n"
+"background-color: rgb(221, 214, 73);\n"
+"border: 3px solid white;")
+        self.soci.setObjectName("soci")
+        self.gridLayout.addWidget(self.soci, 1, 0, 1, 1)
+        self.fornitori = QtWidgets.QPushButton(self.gridLayoutWidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.fornitori.sizePolicy().hasHeightForWidth())
+        self.fornitori.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setFamily("Yu Gothic UI Semibold")
+        font.setPointSize(18)
+        font.setBold(True)
+        font.setWeight(75)
+        self.fornitori.setFont(font)
+        self.fornitori.setStyleSheet("border-radius: 20px;\n"
+"background-color: rgb(221, 214, 73);\n"
+"border: 3px solid white;\n"
+"")
+        self.fornitori.setObjectName("fornitori")
+        self.gridLayout.addWidget(self.fornitori, 2, 1, 1, 1)
         self.sicurezza = QtWidgets.QPushButton(self.gridLayoutWidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -92,23 +150,6 @@ class VistaHome(object):
 "")
         self.contabilita.setObjectName("contabilita")
         self.gridLayout.addWidget(self.contabilita, 0, 1, 1, 1)
-        self.soci = QtWidgets.QPushButton(self.gridLayoutWidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.soci.sizePolicy().hasHeightForWidth())
-        self.soci.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setFamily("Yu Gothic UI Semibold")
-        font.setPointSize(18)
-        font.setBold(True)
-        font.setWeight(75)
-        self.soci.setFont(font)
-        self.soci.setStyleSheet("border-radius: 20px;\n"
-"background-color: rgb(221, 214, 73);\n"
-"border: 3px solid white;")
-        self.soci.setObjectName("soci")
-        self.gridLayout.addWidget(self.soci, 1, 0, 1, 1)
         self.campi = QtWidgets.QPushButton(self.gridLayoutWidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -127,71 +168,36 @@ class VistaHome(object):
 "")
         self.campi.setObjectName("campi")
         self.gridLayout.addWidget(self.campi, 0, 0, 1, 1)
-        self.tornalogin = QtWidgets.QCommandLinkButton(self.centralwidget)
-        self.tornalogin.setGeometry(QtCore.QRect(20, 710, 151, 45))
-        font = QtGui.QFont()
-        font.setFamily("Segoe UI")
-        font.setPointSize(11)
-        font.setBold(True)
-        font.setItalic(False)
-        font.setWeight(75)
-        self.tornalogin.setFont(font)
-        self.tornalogin.setStyleSheet("background-color: rgb(255, 255, 255);")
-        self.tornalogin.setObjectName("tornalogin")
         self.label_3 = QtWidgets.QLabel(self.centralwidget)
         self.label_3.setGeometry(QtCore.QRect(350, 10, 501, 271))
         self.label_3.setStyleSheet("image: url(:/newPrefix/logo.png.png);")
         self.label_3.setText("")
         self.label_3.setObjectName("label_3")
-        self.verticalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(280, 530, 541, 81))
-        self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout.setObjectName("verticalLayout")
-        self.dipendenti = QtWidgets.QPushButton(self.verticalLayoutWidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.dipendenti.sizePolicy().hasHeightForWidth())
-        self.dipendenti.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setFamily("Yu Gothic UI Semibold")
-        font.setPointSize(18)
-        font.setBold(True)
-        font.setWeight(75)
-        self.dipendenti.setFont(font)
-        self.dipendenti.setStyleSheet("border-radius: 20px;\n"
-"background-color: rgb(221, 214, 73);\n"
-"border: 3px solid white;\n"
-"")
-        self.dipendenti.setObjectName("dipendenti")
-        self.verticalLayout.addWidget(self.dipendenti)
         self.label.raise_()
         self.label_2.raise_()
         self.gridLayoutWidget.raise_()
-        self.tornalogin.raise_()
         self.label_3.raise_()
-        self.verticalLayoutWidget.raise_()
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         self.passaDipendenti()
         self.passaSoci()
-        self.passaUtenti()
         self.passaCampi()
+        self.passaUtenti()
+        self.passaLiquidita()
+        self.passaFornitori()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.label_2.setText(_translate("MainWindow", "Centro Sportivo \"UNIVPM\""))
+        self.dipendenti.setText(_translate("MainWindow", "Gestione Dipendenti"))
+        self.soci.setText(_translate("MainWindow", "Gestione Soci"))
+        self.fornitori.setText(_translate("MainWindow", "Gestione Fornitori"))
         self.sicurezza.setText(_translate("MainWindow", "Sicurezza"))
         self.contabilita.setText(_translate("MainWindow", "Gestione Contabilità"))
-        self.soci.setText(_translate("MainWindow", "Gestione Soci"))
         self.campi.setText(_translate("MainWindow", "Prenotazione Campi"))
-        self.tornalogin.setText(_translate("MainWindow", "Torna a Login"))
-        self.dipendenti.setText(_translate("MainWindow", "Gestione Dipendenti"))
 
     def passaDipendenti(self):
         self.dipendenti.clicked.connect(self.controllerDipendente.passaDipendenti)
@@ -205,3 +211,8 @@ class VistaHome(object):
     def passaCampi(self):
         self.campi.clicked.connect(self.controllerCampi.passaCampi)
 
+    def passaLiquidita(self):
+        self.contabilita.clicked.connect(self.controllerLiquidita.passaLiquidita)
+
+    def passaFornitori(self):
+        self.fornitori.clicked.connect(self.controllerFornitori.passaFornitori)

@@ -38,6 +38,15 @@ class DipendentiView(QMainWindow):
         self.message = QMessageBox.warning(self, " ATTENZIONE! ", "Impossibile effettuare la modifica!")
 
 
+    def getInserisciLineEdit(self):
+        cf = self.inserisciDip.cf.text()
+        nome = self.inserisciDip.nomedip.text()
+        cognome = self.inserisciDip.congomedip.text()
+        citta = self.inserisciDip.cittadip.text()
+        tel = self.inserisciDip.cellularedip.text()
+        mansione = self.inserisciDip.mansionedip.text()
+        ore = self.inserisciDip.oredip.text()
+        stip = self.inserisciDip.stipendiodip.text()
+        username = self.inserisciDip.usernamedip.text()
 
-
-
+        return cf, nome, cognome, citta, tel, mansione, ore, stip, username

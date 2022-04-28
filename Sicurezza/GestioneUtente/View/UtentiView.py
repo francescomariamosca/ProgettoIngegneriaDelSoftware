@@ -28,3 +28,6 @@ class UtentiView(QMainWindow):
 
     def warnInserimento(self):
         self.message = QMessageBox.warning(self, "ATTENZIONE!", "Le password non corrispondono!")
+
+    def warnUtenteEsistente(self):
+        self.message = QMessageBox.warning(self, "ATTENZIONE!", "Questo nome utente è già stato assegnato ad un altro dipendente")

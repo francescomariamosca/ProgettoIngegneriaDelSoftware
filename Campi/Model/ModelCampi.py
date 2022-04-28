@@ -4,7 +4,7 @@ class ModelCampi():
     def __init__(self):
         self.conn = sqlite3.connect('CentroSportivo.db')
         self.c = self.conn.cursor()
-        #self.insertValues()
+        #self.inserisci()
         self.c.execute("SELECT * FROM Campi")
         result = self.c.fetchall()
         print(result)
@@ -15,8 +15,20 @@ class ModelCampi():
         self.conn.commit()
 
     def insertValues(self):
-        self.c.execute("INSERT INTO Campi VALUES('2022-03-21', '10-11', 'Campo 2 (Terra Rossa)', '2', '', '', '')")
-        self.c.execute("INSERT INTO Campi VALUES('2022-03-10', '12-13', 'Calcetto', '3', '', '', '')")
-        self.c.execute("INSERT INTO Campi VALUES('2022-03-19', '20-21', 'Padel 1', '4', '', '', '')")
-        self.c.execute("INSERT INTO Campi VALUES('2022-03-20', '20-21', 'Padel 2', '1', '', '', '')")
+        self.c.execute("INSERT INTO Campi VALUES('2022-03-10', '19-20', 'Calcetto', 'Mario', '', '', '')")
+        self.c.execute("INSERT INTO Campi VALUES('2022-03-10', '12-13', 'Campo 2 (Terra Rossa)', '1', '', '', '')")
+        self.c.execute("INSERT INTO Campi VALUES('2022-03-10', '13-14', 'Campo 2 (Terra Rossa)', '4', '', '', '')")
+        self.c.execute("INSERT INTO Campi VALUES('2022-03-10', '20-21', 'Calcetto', 'Giuseppe', '', '', '')")
+        self.c.execute("INSERT INTO Campi VALUES('2022-03-10', '17-18', 'Padel 1', '2', '', '', '')")
+        self.c.execute("INSERT INTO Campi VALUES('2022-03-10', '12-13', 'Padel 2', '3', '', '', '')")
+
         self.conn.commit()
+
+    def inserisci(self):
+        self.c.execute("INSERT INTO Campi VALUES('2022-03-10', '17-18', 'Padel 2', '4', '', '', '')")
+        self.c.execute("INSERT INTO Campi VALUES('2022-03-10', '18-19', 'Padel 2', '4', '5', '', '')")
+        self.c.execute("INSERT INTO Campi VALUES('2022-03-10', '20-21', 'Padel 2', '4', '', '', '')")
+        self.conn.commit()
+
+
+

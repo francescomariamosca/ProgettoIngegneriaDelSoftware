@@ -5,6 +5,9 @@ from Soci.View.SociView import SociView
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5 import QtWidgets
 from datetime import date
+import smtplib
+
+from Utility.email import email
 
 
 class ControllerSocio(QMainWindow):
@@ -13,9 +16,10 @@ class ControllerSocio(QMainWindow):
         self.home = home
         self.socioView = SociView()
         self.socioModel = ModelSocio()
+        self.mail = email()
         self.list = []
         self.listAbbonamento = []
-        self.called = False
+        self.called = True
 
     def passaSoci(self):
         #from Home.View.Home import Home
@@ -219,25 +223,27 @@ class ControllerSocio(QMainWindow):
         today = datetime.datetime.today()
         print(today)
 
-        query = "SELECT Data_abbonamento, id_socio, e_mail from Soci"
+        query = "SELECT Data_abbonamento, id_socio, e_mail, nome_cliente, cognome_cliente from Soci"
 
         for row in self.socioModel.c.execute(query):
             dataAbbonamento = row[0]
             id_socio = row[1]
             email = row[2]
-            self.listAbbonamento.append((dataAbbonamento, id_socio, email))
+            nome = row[3]
+            cognome = row[4]
+            self.listAbbonamento.append((dataAbbonamento, id_socio, email, nome, cognome))
         print(self.listAbbonamento)
 
 
 
-        for data, id, email in self.listAbbonamento:
+        for data, id, email, nome, cognome in self.listAbbonamento:
 
             result = datetime.datetime.strptime(data, "%Y-%m-%d")
             y = today - result
             delta = datetime.timedelta(335)
             if y > delta:
                 self.socioView.scadenzaAbbonamento(id, email)
-                #inserire le email
+                self.email.emailScadenzaAbbonamento(email, nome, cognome)
 
         self.listAbbonamento.clear()
         self.called = True

@@ -17,6 +17,8 @@ class Home(QMainWindow):
         self.homeUI.soci.clicked.connect(self.window.close)
         self.homeUI.sicurezza.clicked.connect(self.window.close)
         self.homeUI.campi.clicked.connect(self.window.close)
+        self.homeUI.contabilita.clicked.connect(self.window.close)
+        self.homeUI.fornitori.clicked.connect(self.window.close)
 
 
 

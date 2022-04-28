@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QMainWindow
 
-from Dipendenti.Model.ModelDipendente import ModelDipendente
+from GesitoneDatabase.QueryGestioneDipendenti.TableDipendenti import TableDipendenti
 from PyQt5 import QtWidgets
 from Dipendenti.View.DipendentiView import DipendentiView
 
@@ -10,7 +10,7 @@ class ControllerDipendente(QMainWindow):
         super(QMainWindow, self).__init__()
         self.home = home
         self.dipendenteView = DipendentiView()
-        self.dipendenteModel = ModelDipendente()
+        self.tableDipendenti = TableDipendenti()
         self.list = []
 
 
@@ -23,9 +23,13 @@ class ControllerDipendente(QMainWindow):
         self.window = QtWidgets.QMainWindow()
         self.dipendenteView.homeDipendenti.setupUi(self.window)
         self.window.show()
+        print("fatto")
+
 
         #funzioni per tornare alla home da gestione dipendenti
         self.dipendenteView.homeDipendenti.tornahome.clicked.connect(self.window.close)
+        print("fatto")
+
         self.dipendenteView.homeDipendenti.tornahome.clicked.connect(self.home.mostra)
 
         self.dipendenteView.homeDipendenti.aggiungidip.clicked.connect(self.window.close)
@@ -41,9 +45,10 @@ class ControllerDipendente(QMainWindow):
 
     #funzione per richiamare i bottoni
     def passaBottoniDip(self):
+        print("fatto")
         self.dipendenteView.homeDipendenti.aggiungidip.clicked.connect(self.passaInserisciDip)
-        self.dipendenteView.homeDipendenti.eliminadip.clicked.connect(self.passaEliminaDip)
-        self.dipendenteView.homeDipendenti.modificainfodip.clicked.connect(self.passaRicercaDip)
+        #self.dipendenteView.homeDipendenti.eliminadip.clicked.connect(self.passaEliminaDip)
+        #self.dipendenteView.homeDipendenti.modificainfodip.clicked.connect(self.passaRicercaDip)
 
     def passaInserisciDip(self):
         #inizializzazione dell'interfaccia di inserimento
@@ -98,30 +103,13 @@ class ControllerDipendente(QMainWindow):
         self.dipendenteView.modificaDip.tornagestionedip.clicked.connect(self.passaDipendenti)
         self.dipendenteView.modificaDip.tornagestionedip.clicked.connect(self.dipendenteView.homeDipendenti.window.hide)
 
-
-
-
-
-
     def inserisciDipendente(self):
-        insertQuery = "INSERT INTO Dipendenti VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s')" % (''.join(self.dipendenteView.inserisciDip.cf.text()),
-                                                                                                        ''.join(self.dipendenteView.inserisciDip.nomedip.text()),
-                                                                                                        ''.join(self.dipendenteView.inserisciDip.congomedip.text()),
-                                                                                                        ''.join(self.dipendenteView.inserisciDip.cittadip.text()),
-                                                                                                        ''.join(self.dipendenteView.inserisciDip.cellularedip.text()),
-                                                                                                        ''.join(self.dipendenteView.inserisciDip.mansionedip.text()),
-                                                                                                        ''.join(self.dipendenteView.inserisciDip.oredip.text()),
-                                                                                                        ''.join(self.dipendenteView.inserisciDip.stipendiodip.text()),
-                                                                                                        ''.join(self.dipendenteView.inserisciDip.usernamedip.text()))
-        print("lo sto per fare")
-        checkQuery = "SELECT cf FROM Dipendenti WHERE cf = '%s'" % (''.join(self.dipendenteView.inserisciDip.cf.text()))
-        self.dipendenteModel.c.execute(checkQuery)
-        result = self.dipendenteModel.c.fetchone()
+        cf, nome, cognome, citta, tel, mansione, ore, stip, username = self.dipendenteView.getInserisciLineEdit()
 
-        if result == None:
-            self.dipendenteModel.c.execute(insertQuery)
-            print("l'ho fatto")
-            self.dipendenteModel.conn.commit()
+        params = {'cf': cf, 'nome': nome, 'cognome': cognome, 'citta': citta, 'tel': tel, 'mansione': mansione, 'ore': ore, 'stip': stip, 'username': username}
+
+        result = self.tableDipendenti.insertQuery(params)
+        if result == 0:
             self.dipendenteView.messageInserimentoCorretto()
         else:
             self.dipendenteView.messageWarningInserimento()
@@ -132,15 +120,15 @@ class ControllerDipendente(QMainWindow):
         checkQuery = "SELECT cf FROM Dipendenti WHERE cf = '%s'" % (''.join(self.dipendenteView.eliminaDip.ricercacf.text()))
 
         updateSicurezza = "DELETE FROM sicurezza where nome_dipendente = '%s'" %(''.join(self.dipendenteView.eliminaDip.ricercacf.text()))
-        self.dipendenteModel.c.execute(checkQuery)
-        result = self.dipendenteModel.c.fetchone()
+        self.tableDipendenti.c.execute(checkQuery)
+        result = self.tableDipendenti.c.fetchone()
 
         if result == None:
             self.dipendenteView.messageWarningEliminazione()
         else:
-            self.dipendenteModel.c.execute(queryEliminazione)
-            self.dipendenteModel.c.execute(updateSicurezza)
-            self.dipendenteModel.conn.commit()
+            self.tableDipendenti.c.execute(queryEliminazione)
+            self.tableDipendenti.c.execute(updateSicurezza)
+            self.tableDipendenti.conn.commit()
             self.dipendenteView.messageEliminazioneAvvenuta()
 
     def ricercaDipendente(self):
@@ -148,14 +136,14 @@ class ControllerDipendente(QMainWindow):
         searchQuery = "SELECT * FROM Dipendenti where cf = '%s'" % (''.join(self.dipendenteView.ricercaDip.cf.text()))
 
         checkQuery = "SELECT cf FROM Dipendenti where cf ='%s'" % (''.join(self.dipendenteView.ricercaDip.cf.text()))
-        self.dipendenteModel.c.execute(checkQuery)
-        result = self.dipendenteModel.c.fetchone()
+        self.tableDipendenti.c.execute(checkQuery)
+        result = self.tableDipendenti.c.fetchone()
 
         if result == None:
             self.dipendenteView.messageWarningRicerca()
             self.passaDipendenti()
         else:
-            for row in self.dipendenteModel.c.execute(searchQuery):
+            for row in self.tableDipendenti.c.execute(searchQuery):
                 cf = row[0]
                 nome = row[1]
                 cognome = row[2]
@@ -221,14 +209,14 @@ class ControllerDipendente(QMainWindow):
                                                                                                                        ''.join(self.dipendenteView.modificaDip.usernamedip.text()),
                                                                                                                        ''.join(self.dipendenteView.modificaDip.cf.text()))
         checkquery = "SELECT cf FROM Dipendenti where cf = '%s'" % (''.join(self.dipendenteView.modificaDip.cf.text()))
-        self.dipendenteModel.c.execute(checkquery)
-        result = self.dipendenteModel.c.fetchone()
+        self.tableDipendenti.c.execute(checkquery)
+        result = self.tableDipendenti.c.fetchone()
 
         if result == None:
             self.dipendenteView.messageWarningModify()
         else:
-            self.dipendenteModel.c.execute(query)
-            self.dipendenteModel.conn.commit()
+            self.tableDipendenti.c.execute(query)
+            self.tableDipendenti.conn.commit()
             self.dipendenteView.messageCorrettoModify()
 
 
