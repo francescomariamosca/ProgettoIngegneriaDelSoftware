@@ -1,6 +1,7 @@
 import datetime
 
-from Soci.Model.ModelSocio import ModelSocio
+
+from GestioneDatabase.QueryGestioneSoci.TableSoci import TableSoci
 from Soci.View.SociView import SociView
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5 import QtWidgets
@@ -15,9 +16,9 @@ class ControllerSocio(QMainWindow):
         super(QMainWindow, self).__init__()
         self.home = home
         self.socioView = SociView()
-        self.socioModel = ModelSocio()
+        self.tableSocio = TableSoci()
+        self.resultSearch = None
         self.mail = email()
-        self.list = []
         self.listAbbonamento = []
         self.called = True
 
@@ -104,120 +105,79 @@ class ControllerSocio(QMainWindow):
         self.socioView.modificaSocio.tornagestionesoci.clicked.connect(self.socioView.homeSoci.window.hide)
 
     def inserisciSocio(self):
-        insertquery= "INSERT INTO Soci VALUES ('%s','%s','%s','%s','%s','%s','%s')" % (''.join(self.socioView.inserisciSocio.idsocio.text()),
-                                                                                        ''.join(self.socioView.inserisciSocio.email.text()),
-                                                                                        ''.join(self.socioView.inserisciSocio.cfsocio.text()),
-                                                                                        ''.join(self.socioView.inserisciSocio.nome.text()),
-                                                                                        ''.join(self.socioView.inserisciSocio.cognome.text()),
-                                                                                        ''.join(self.socioView.inserisciSocio.telefono.text()),
-                                                                                        ''.join(self.socioView.inserisciSocio.datarinnovo.text()))
-
-        checkQuery = "SELECT id_socio FROM Soci where id_socio = '%s'" % (''.join(self.socioView.inserisciSocio.idsocio.text()))
-        self.socioModel.c.execute(checkQuery)
-        result = self.socioModel.c.fetchone()
+        id_socio, e_mail, CF, nome_cliente, cognome_cliente, telefono, Data_abbonamento = self.socioView.getInserisciLineEdit()
+        params = {'id_socio': id_socio, 'e_mail': e_mail, 'CF': CF, 'nome_cliente': nome_cliente, 'cognome_cliente': cognome_cliente, 'telefono' : telefono, 'Data_abbonamento': Data_abbonamento}
         date = self.socioView.inserisciSocio.datarinnovo.text()
 
-        if result == None:
-            if len(date.split("-", 4)) == 3 and date.split("-", 4):
-                self.socioModel.c.execute(insertquery)
-                self.socioModel.conn.commit()
-                self.socioView.sociInserimentoCorretto()
-            else:
-                self.socioView.dateErrore()
+        if len(date.split("-", 4)) == 3 and date.split("-", 4):
+                result = self.tableSocio.insertQuery(params)
+                if result == 0:
+                    self.socioView.sociInserimentoCorretto()
+                else:
+                    self.socioView.dateErrore()
         else:
-            self.socioView.sociInserimentoWarn()
+                self.socioView.dateErrore()
 
 
     def eliminaSocio(self):
 
-        queryEliminazione = "DELETE FROM Soci where id_socio = '%s'" % (''.join(self.socioView.eliminaSocio.ricercaid.text()))
-
-        checkQuery = "SELECT id_socio FROM Soci where id_socio = '%s'" % (''.join(self.socioView.eliminaSocio.ricercaid.text()))
-        self.socioModel.c.execute(checkQuery)
-        result = self.socioModel.c.fetchone()
-
-        if result == None:
+        id_socio = self.socioView.getEliminaLineEdit()
+        print(id_socio)
+        result = self.tableSocio.deleteQuery(id_socio)
+        if result != 0:
             self.socioView.sociEliminazioneWarn()
-
         else:
-            self.socioModel.c.execute(queryEliminazione)
-            self.socioModel.conn.commit()
             self.socioView.sociEliminazioneCorretto()
 
     def ricercaSocio(self):
-        checkQuery = "SELECT id_socio FROM Soci where id_socio = '%s'" % (''.join(self.socioView.ricercaSocio.ricercaid.text()))
+        id_socio = self.socioView.getRicercaLineEdit()
+        self.resultSearch = self.tableSocio.searchQuery(id_socio)
+        print(self.resultSearch)
 
-        searchQuery = "SELECT * FROM Soci where id_socio = '%s'" % (''.join(self.socioView.ricercaSocio.ricercaid.text()))
-
-        self.socioModel.c.execute(checkQuery)
-        result = self.socioModel.c.fetchone()
-
-        if result == None:
+        if self.resultSearch == 0:
             self.socioView.sociRicercaWarn()
             self.passaSoci()
         else:
-            for row in self.socioModel.c.execute(searchQuery):
-                id_socio = row[0]
-                email = row[1]
-                cf = row[2]
-                nome = row[3]
-                cognome = row[4]
-                telefono = row[5]
-                data = row[6]
-                self.list.append(id_socio)
-                self.list.append(email)
-                self.list.append(cf)
-                self.list.append(nome)
-                self.list.append(cognome)
-                self.list.append(telefono)
-                self.list.append(data)
             self.passaModificaSocio()
 
     def caricaSocio(self):
-        id_socio = self.list[0]
-        converted_id = str(id_socio)
-        self.socioView.modificaSocio.idsocio.setText(converted_id)
+        print(self.resultSearch)
+        id_socio = self.resultSearch[0]
+        e_mail = self.resultSearch[1]
+        cf = self.resultSearch[2]
+        nome_cliente = self.resultSearch[3]
+        cognome_cliente = self.resultSearch[4]
+        telefono = self.resultSearch[5]
+        data_abbonamento = self.resultSearch[6]
 
-        email = self.list[1]
-        self.socioView.modificaSocio.email.setText(email)
+        id_socioStr = str(id_socio)
 
-        cf = self.list[2]
+        self.socioView.modificaSocio.idsocio.setText(id_socioStr)
+        self.socioView.modificaSocio.idsocio.setEnabled(False)
+        self.socioView.modificaSocio.email.setText(e_mail)
         self.socioView.modificaSocio.cfsocio.setText(cf)
+        self.socioView.modificaSocio.nome.setText(nome_cliente)
+        self.socioView.modificaSocio.cognome.setText(cognome_cliente)
+        self.socioView.modificaSocio.telefono.setText(telefono)
 
-        nome = self.list[3]
-        self.socioView.modificaSocio.nome.setText(nome)
+        self.socioView.modificaSocio.datarinnovo.setText(data_abbonamento)
+        self.socioView.modificaSocio.datarinnovo.setMaxLength(10)
 
-        cognome = self.list[4]
-        self.socioView.modificaSocio.cognome.setText(cognome)
-
-        tel = self.list[5]
-        self.socioView.modificaSocio.telefono.setText(tel)
-
-        rinnovo = self.list[6]
-        converted_rinnovo = str(rinnovo)
-        self.socioView.modificaSocio.datarinnovo.setText(converted_rinnovo)
-
-        self.list.clear()
 
     def modificaSocio(self):
-        modifyQuery = "UPDATE Soci SET e_mail = '%s', CF = '%s', nome_cliente = '%s', cognome_cliente = '%s', telefono = '%s', Data_abbonamento = '%s' WHERE id_socio = '%s'" % (''.join(self.socioView.modificaSocio.email.text()),
-         ''.join(self.socioView.modificaSocio.cfsocio.text()),
-         ''.join(self.socioView.modificaSocio.nome.text()),
-         ''.join(self.socioView.modificaSocio.cognome.text()),
-         ''.join(self.socioView.modificaSocio.telefono.text()),
-         ''.join(self.socioView.modificaSocio.datarinnovo.text()),
-         ''.join(self.socioView.modificaSocio.idsocio.text()))
-
-        checkQuery = "SELECT id_socio from Soci where id_socio = '%s'" % (''.join(self.socioView.modificaSocio.idsocio.text()))
-        self.socioModel.c.execute(checkQuery)
-        result = self.socioModel.c.fetchone()
-
-        if result == None:
-            self.socioView.sociModificaWarn()
-        else:
-            self.socioModel.c.execute(modifyQuery)
-            self.socioModel.conn.commit()
+        id_socio, e_mail, CF, nome_cliente, cognome_cliente, telefono, Data_abbonamento = self.socioView.getModificaLineEdit()
+        params = {'id_socio': id_socio, 'e_mail': e_mail, 'CF': CF, 'nome_cliente': nome_cliente,
+                  'cognome_cliente': cognome_cliente, 'telefono': telefono, 'Data_abbonamento': Data_abbonamento}
+        date = self.socioView.modificaSocio.datarinnovo.text()
+        print(date)
+        if len(date.split("-", 4)) == 3 and date.split("-", 4):
+            print("entrato")
+            self.tableSocio.modifyQuery(params)
             self.socioView.sociModificaCorretto()
+        else:
+            self.socioView.sociModificaWarn()
+
+
 
     def infoScadenzAbbonamento(self):
         today = datetime.datetime.today()
@@ -225,7 +185,7 @@ class ControllerSocio(QMainWindow):
 
         query = "SELECT Data_abbonamento, id_socio, e_mail, nome_cliente, cognome_cliente from Soci"
 
-        for row in self.socioModel.c.execute(query):
+        for row in self.tableSocio.c.execute(query):
             dataAbbonamento = row[0]
             id_socio = row[1]
             email = row[2]
@@ -247,15 +207,3 @@ class ControllerSocio(QMainWindow):
 
         self.listAbbonamento.clear()
         self.called = True
-
-
-
-
-
-
-
-
-
-
-
-

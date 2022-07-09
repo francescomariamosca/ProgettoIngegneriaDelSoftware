@@ -9,12 +9,14 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from Soci.Model.ModelSocio import ModelSocio
+
+from GestioneDatabase.QueryGestioneSoci.TableSoci import TableSoci
 
 
 class GestioneSociUI(object):
     def setupUi(self, MainWindow):
-        self.modelSocio = ModelSocio()
+        self.tableSocio = TableSoci()
+
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1500, 750)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -239,7 +241,7 @@ class GestioneSociUI(object):
 
         self.tabellasoci.setRowCount(60)
 
-        for row in self.modelSocio.c.execute(subquery):
+        for row in self.tableSocio.c.execute(subquery):
             id_cliente = row[0]
             converted_id = str(id_cliente)
             self.tabellasoci.setItem(rowindex, 0, QtWidgets.QTableWidgetItem(converted_id))
@@ -253,4 +255,4 @@ class GestioneSociUI(object):
             self.tabellasoci.setItem(rowindex, 6, QtWidgets.QTableWidgetItem(converted_date))
             rowindex += 1
 
-        self.modelSocio.conn.commit()
+        self.tableSocio.conn.commit()

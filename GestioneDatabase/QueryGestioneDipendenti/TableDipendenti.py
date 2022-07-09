@@ -35,16 +35,15 @@ class TableDipendenti(TableInterface):
 
     def deleteQuery(self, a):
         query = "DELETE FROM Dipendenti WHERE cf = '%s'" % (''.join(a))
+        querySicurezza = "DELETE FROM Sicurezza where nome_dipendente = '%s'" % (''.join(a))
         result = self.checkQuery(a)
         if result == None:
             pass
         else:
             self.c.execute(query)
+            self.c.execute(querySicurezza)
             self.conn.commit()
             return 0
-
-    def loadData(self):
-        pass
 
     def modifyQuery(self, params: dict):
 
@@ -66,8 +65,6 @@ class TableDipendenti(TableInterface):
         self.conn.commit()
 
 
-
-
     def searchQuery(self, cf):
         query = "SELECT * FROM dipendenti WHERE cf = '%s'" % (''.join(cf))
         result = self.checkQuery(cf)
@@ -87,5 +84,3 @@ class TableDipendenti(TableInterface):
             stip = data[7]
             username = data[8]
             return cf, nome, cognome, citta, telefono, mansione, ore, stip, username
-
-

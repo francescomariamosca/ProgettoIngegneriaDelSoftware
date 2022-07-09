@@ -35,7 +35,7 @@ class SociView(QMainWindow):
         self.message = QMessageBox.warning(self, "ATTENZIONE!", "Il socio che stai cercando non esiste!")
 
     def sociModificaWarn(self):
-        self.message = QMessageBox.warning(self, "ATTENZIONE!", "L'id di un cliente non può essere modificato!")
+        self.message = QMessageBox.warning(self, "ATTENZIONE!", "Qualcosa è andato storto con la modifica!")
 
     def sociModificaCorretto(self):
         self.message = QMessageBox.information(self, "PERFETTO!", "Il socio è stato modificato con successo!")
@@ -44,4 +44,32 @@ class SociView(QMainWindow):
         converted = str(id_socio)
         self.message = QMessageBox.warning(self, "ATTENZIONE!", "L'abbonamento del socio " + converted + " sta per scadere, invo una mail a " + email)
 
+    def getInserisciLineEdit(self):
+        id_socio = self.inserisciSocio.idsocio.text()
+        e_mail = self.inserisciSocio.email.text()
+        CF = self.inserisciSocio.cfsocio.text()
+        nome = self.inserisciSocio.nome.text()
+        cognome = self.inserisciSocio.cognome.text()
+        tel = self.inserisciSocio.telefono.text()
+        data = self.inserisciSocio.datarinnovo.text()
 
+        return id_socio, e_mail, CF, nome, cognome, tel, data
+
+    def getEliminaLineEdit(self):
+        id_socio = self.eliminaSocio.ricercaid.text()
+        return id_socio
+
+    def getRicercaLineEdit(self):
+        id_socio = self.ricercaSocio.ricercaid.text()
+        return id_socio
+
+    def getModificaLineEdit(self):
+        id_socio = self.modificaSocio.idsocio.text()
+        e_mail = self.modificaSocio.email.text()
+        CF = self.modificaSocio.cfsocio.text()
+        nome = self.modificaSocio.nome.text()
+        cognome = self.modificaSocio.cognome.text()
+        tel = self.modificaSocio.telefono.text()
+        data = self.modificaSocio.datarinnovo.text()
+
+        return id_socio, e_mail, CF, nome, cognome, tel, data

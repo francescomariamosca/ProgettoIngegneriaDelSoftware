@@ -165,8 +165,6 @@ class ControllerDipendente(QMainWindow):
 
     def modificaInfoDip(self):
         cf, nome, cognome, citta, tel, mansione, ore, stip, username = self.dipendenteView.getModificaLineEdit()
-        print(cf, nome, cognome, citta, tel, mansione, ore, stip, username)
-        print(ore.isnumeric())
         params = {'cf': cf, 'nome': nome, 'cognome': cognome, 'citta': citta, 'tel': tel, 'mansione': mansione, 'ore': ore, 'stip': stip, 'username': username}
 
         self.tableDipendenti.modifyQuery(params)

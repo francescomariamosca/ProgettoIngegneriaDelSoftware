@@ -10,12 +10,12 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from Soci.Model.ModelSocio import ModelSocio
+from GestioneDatabase.QueryGestioneSoci.TableSoci import TableSoci
 
 
 class LiquiditaHomeUI(object):
     def setupUi(self, MainWindow):
-        self.modelSoci = ModelSocio()
+        self.modelSoci = TableSoci()
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1913, 676)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
