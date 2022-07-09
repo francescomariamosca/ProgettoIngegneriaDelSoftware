@@ -50,3 +50,36 @@ class DipendentiView(QMainWindow):
         username = self.inserisciDip.usernamedip.text()
 
         return cf, nome, cognome, citta, tel, mansione, ore, stip, username
+
+    def getEliminaLineEdit(self):
+        cf = self.eliminaDip.ricercacf.text()
+        return cf
+
+    def getRicercaLineEdit(self):
+        cf = self.ricercaDip.cf.text()
+        return cf
+
+    def setModificaLineEdit(self, cf, nome, cognome, citta, tel, mansione, ore, stip, username):
+        self.modificaDip.cf.setText(cf)
+        self.modificaDip.nomedip.setText(nome)
+        self.modificaDip.congomedip.setText(cognome)
+        self.modificaDip.cittadip.setText(citta)
+        self.modificaDip.cellularedip.setText(tel)
+        self.modificaDip.mansionedip.setText(mansione)
+        self.modificaDip.oredip.setText(ore)
+        self.modificaDip.stipendiodip.setText(stip)
+        self.modificaDip.usernamedip.setText(username)
+
+    def getModificaLineEdit(self):
+        cf = self.modificaDip.cf.text()
+        nome = self.modificaDip.nomedip.text()
+        cognome = self.modificaDip.congomedip.text()
+        citta = self.modificaDip.cittadip.text()
+        telefono = self.modificaDip.cellularedip.text()
+        mansione = self.modificaDip.mansionedip.text()
+        ore = self.modificaDip.oredip.text()
+        stip = self.modificaDip.stipendiodip.text()
+        username = self.modificaDip.usernamedip.text()
+        print(cf, nome, cognome, citta, telefono, mansione, ore, stip, username)
+
+        return cf, nome, cognome, citta, telefono, mansione, ore, stip, username

@@ -10,13 +10,12 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from Fornitori.Model.ModelFornitore import ModelFornitore
+from GestioneDatabase.QueryGestioneFornitori.TableFornitori import TableFornitori
 
 
 class HomeFornitoriUI(object):
     def setupUi(self, MainWindow):
-        self.modelFornitore = ModelFornitore()
-
+        self.tableForn = TableFornitori()
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1800, 590)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -238,9 +237,8 @@ class HomeFornitoriUI(object):
     def loadData(self):
         subquery = "SELECT * FROM Fornitori"
         rowindex=0
-
         self.tabfornitori.setRowCount(50)
-        for row in self.modelFornitore.c.execute(subquery):
+        for row in self.tableForn.c.execute(subquery):
             id = row[0]
             converted_id = str(id)
             self.tabfornitori.setItem(rowindex, 0, QtWidgets.QTableWidgetItem(converted_id))
@@ -253,7 +251,7 @@ class HomeFornitoriUI(object):
 
             rowindex += 1
 
-        self.modelFornitore.conn.commit()
+        self.tableForn.conn.commit()
 
 
 

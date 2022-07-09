@@ -154,7 +154,6 @@ class ModificaDipUI(object):
         self.oredip.setStyleSheet("border-radius: 20px;\n"
 "background-color: rgb(221, 214, 73);\n"
 "border: 3px solid white;")
-        self.oredip.setText("")
         self.oredip.setObjectName("oredip")
         self.gridLayout.addWidget(self.oredip, 7, 0, 1, 1)
         self.label_5 = QtWidgets.QLabel(self.layoutWidget)
@@ -211,7 +210,6 @@ class ModificaDipUI(object):
         self.stipendiodip.setStyleSheet("border-radius: 20px;\n"
 "background-color: rgb(221, 214, 73);\n"
 "border: 3px solid white;")
-        self.stipendiodip.setText("")
         self.stipendiodip.setObjectName("stipendiodip")
         self.gridLayout.addWidget(self.stipendiodip, 7, 1, 1, 1)
         self.label = QtWidgets.QLabel(self.layoutWidget)

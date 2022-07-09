@@ -33,3 +33,45 @@ class FornitoriView(QMainWindow):
 
     def messageWarningModifica(self):
         self.message = QMessageBox.warning(self, " ATTENZIONE! ", " Impossibile effettuare la modifica! ")
+
+    def messageWarningRicerca(self):
+        self.message = QMessageBox.warning(self, " ATTENZIONE! ", " Nessun fornitore corrisponde all'id inserito! ")
+
+    def getInserisciFornitoreLineEdit(self):
+        id_fornitore = self.inserisciFornitore.idfornitore.text()
+        nome = self.inserisciFornitore.nomeazienda.text()
+        email = self.inserisciFornitore.emailazienda.text()
+        telefono = self.inserisciFornitore.telefonoazienda.text()
+        settore = self.inserisciFornitore.settore.text()
+        citta = self.inserisciFornitore.cittazienda.text()
+        via = self.inserisciFornitore.viazienda.text()
+
+        return id_fornitore, nome, email, telefono, settore, citta, via
+
+    def getEliminaFornitoreLineEdit(self):
+        id_forn = self.eliminaFornitore.ricercaidfornitore.text()
+        return id_forn
+
+    def getRicercaFornitoreLineEdit(self):
+        id_forn = self.ricercaFornitore.ricercaidfornitore.text()
+        return id_forn
+
+    def setTextModifica(self, id, nome, email, telefono, settore, citta, via):
+        self.modificaFornitore.idfornitore.setText(id)
+        self.modificaFornitore.nomeazienda.setText(nome)
+        self.modificaFornitore.emailazienda.setText(email)
+        self.modificaFornitore.telefonoazienda.setText(telefono)
+        self.modificaFornitore.settore.setText(settore)
+        self.modificaFornitore.cittazienda.setText(citta)
+        self.modificaFornitore.viazienda.setText(via)
+
+    def getModificaLineEdit(self):
+        id_forn = self.modificaFornitore.idfornitore.text()
+        nome =  self.modificaFornitore.nomeazienda.text()
+        email = self.modificaFornitore.emailazienda.text()
+        tel = self.modificaFornitore.telefonoazienda.text()
+        settore = self.modificaFornitore.settore.text()
+        citta = self.modificaFornitore.cittazienda.text()
+        via = self.modificaFornitore.viazienda.text()
+
+        return id_forn, nome, email, tel, settore, citta, via

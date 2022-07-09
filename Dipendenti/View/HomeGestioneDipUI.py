@@ -10,7 +10,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from GesitoneDatabase.QueryGestioneDipendenti.TableDipendenti import TableDipendenti
+from GestioneDatabase.QueryGestioneDipendenti.TableDipendenti import TableDipendenti
 
 
 class HomeGestioneDipUI(object):

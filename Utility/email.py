@@ -5,11 +5,13 @@ from email.mime.text import MIMEText
 
 class email():
     def __init__(self):
-        self.senderEmail = "centrosportivofake@gmail.com"
-        self.server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
-        self.server.login(self.senderEmail, "dsfds")
+        pass
+
 
     def emailScadenzaAbbonamento(self, email, nome, cognome):
+        self.senderEmail = "centrosportivofake@gmail.com"
+        self.server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
+        self.server.login(self.senderEmail, "Centro123")
         recEmail = email
         message = MIMEMultipart("alternative")
         message["Subject"] = "Prenotazione avvenuta con successo"
@@ -25,6 +27,9 @@ class email():
         self.server.sendmail(self.senderEmail, recEmail, message.as_string())
 
     def emailPrenotazioneAvvenuta(self, email, nome, cognome, data, ora, campo):
+        self.senderEmail = "centrosportivofake@gmail.com"
+        self.server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
+        self.server.login(self.senderEmail, "Centro123")
         recEmail = email
         message = MIMEMultipart("alternative")
         message["Subject"] = "Prenotazione avvenuta con successo"
@@ -45,6 +50,9 @@ Buona giornata da tutto lo staff del Centro Sportivo!
 
 
     def emailPrenotazioneCancellata(self, email, nome, cognome, data, ora, campo):
+        self.senderEmail = "centrosportivofake@gmail.com"
+        self.server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
+        self.server.login(self.senderEmail, "Centro123")
         recEmail = email
         message = MIMEMultipart("alternative")
         message["Subject"] = "Prenotazione eliminata con successo"
