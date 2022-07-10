@@ -84,3 +84,8 @@ class TableDipendenti(TableInterface):
             stip = data[7]
             username = data[8]
             return cf, nome, cognome, citta, telefono, mansione, ore, stip, username
+
+    def updateDipendenti(self, nome_utente, cf):
+        updateDip = "UPDATE Dipendenti SET username = '%s' WHERE cf ='%s' " % (''.join(nome_utente),''.join(cf))
+        self.c.execute(updateDip)
+        self.conn.commit()

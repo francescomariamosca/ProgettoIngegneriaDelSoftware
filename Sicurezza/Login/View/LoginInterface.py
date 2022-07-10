@@ -162,4 +162,3 @@ class LoginInterface(object):
         self.label_6.setText(_translate("MainWindow", "Username"))
         self.label_7.setText(_translate("MainWindow", "Password"))
         self.mostrapasscheck.setText(_translate("MainWindow", "Mostra Password"))
-

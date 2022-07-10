@@ -31,3 +31,30 @@ class UtentiView(QMainWindow):
 
     def warnUtenteEsistente(self):
         self.message = QMessageBox.warning(self, "ATTENZIONE!", "Questo nome utente è già stato assegnato ad un altro dipendente")
+
+    def warnMaxOneUser(self):
+        self.message = QMessageBox.warning(self, "ATTENZIONE!", "Può essere assegnato massimo un dipendente ad ogni utente")
+
+    def getEliminaLineEdit(self):
+        nome_utente = self.eliminaUtente.ricercauser.text()
+        return nome_utente
+
+    def getRircercaLineEdit(self):
+        cf = self.ricercaCf.ricercacfdip.text()
+        return cf
+
+    def getInsertLineEdit(self):
+        username = self.inserisciUtente.username.text()
+        password = self.inserisciUtente.password.text()
+
+        return username, password
+
+    def checkPasswords(self):
+        password = self.inserisciUtente.password.text()
+        confPass = self.inserisciUtente.confermapassword.text()
+
+        if password == confPass:
+            return True
+        else:
+            return False
+

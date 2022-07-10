@@ -14,7 +14,7 @@ from Campi.Controller.ControllerCampi import ControllerCampi
 from Dipendenti.Logica.LogicaDipendente import ControllerDipendente
 from Fornitori.Logica.LogicaFornitore import ControllerFornitori
 from Liquidita.Controller.ControllerLiquidita import ControllerLiquidita
-from Sicurezza.GestioneUtente.Controller.ControllerUtente import ControllerUtente
+from Sicurezza.GestioneUtente.Logica.LogicaUtente import ControllerUtente
 from Soci.Logica.LogicaSocio import ControllerSocio
 from Utility import source
 

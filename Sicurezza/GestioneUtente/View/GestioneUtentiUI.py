@@ -10,12 +10,12 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from Sicurezza.Login.model.LoginModel import LoginModel
+from GestioneDatabase.QuerySicurezza.TableSicurezza import TableSicurezza
 
 
 class GestioneUtentiUI(object):
     def setupUi(self, MainWindow):
-        self.loginModel = LoginModel()
+        self.tableUtente = TableSicurezza()
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(697 , 528)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -147,7 +147,7 @@ class GestioneUtentiUI(object):
         rowindex = 0
 
         self.tabellaUtente.setRowCount(15)
-        for row in self.loginModel.c.execute(subquery):
+        for row in self.tableUtente.c.execute(subquery):
             self.tabellaUtente.setItem(rowindex, 0, QtWidgets.QTableWidgetItem(row[0]))
             self.tabellaUtente.setItem(rowindex, 1, QtWidgets.QTableWidgetItem(row[1]))
             rowindex += 1

@@ -1,11 +1,11 @@
 import sys
 
-from Sicurezza.Login.Controller.LoginController import LoginController
+from Sicurezza.Login.Logica.LoginLogica import LoginLogica
 from PyQt5.QtWidgets import QApplication
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    controller = LoginController()
+    controller = LoginLogica()
     sys.exit(app.exec_())
 

@@ -16,12 +16,16 @@ class LoginView(QMainWindow):
     def Checkbox(self):
         if self.login.mostrapasscheck.isChecked() == True:
             self.login.password.setEchoMode(QLineEdit.Normal)
-            print("cliccato")
         else:
             self.login.password.setEchoMode(QLineEdit.Password)
-            print("non cliccato")
 
 
 #Messaggio di Warning riguardante l'errato inserimento di username e password nell'effettuare il login
     def WarningMessage(self):
         self.warn = QMessageBox.warning(self, " ATTENZIONE! ", "Username e/o password errati, riprova!")
+
+#Funzione per ottenere username e password dal lineEdit
+    def getLoginLineEdit(self):
+        username = self.login.username.text()
+        password = self.login.password.text()
+        return username, password

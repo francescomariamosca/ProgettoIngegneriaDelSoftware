@@ -1,8 +1,8 @@
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5 import QtWidgets
 
+from GestioneDatabase.QuerySicurezza.TableSicurezza import TableSicurezza
 from Sicurezza.GestioneUtente.View.UtentiView import UtentiView
-from Sicurezza.Login.model.LoginModel import LoginModel
 
 
 class ControllerUtente(QMainWindow):
@@ -10,7 +10,7 @@ class ControllerUtente(QMainWindow):
         super(QMainWindow, self).__init__()
         self.home = home
         self.utenteView = UtentiView()
-        self.utenteModel = LoginModel()
+        self.tableUtente = TableSicurezza()
         self.list = []
 
     def passaGestioneUtenti(self):
@@ -52,16 +52,12 @@ class ControllerUtente(QMainWindow):
         self.utenteView.eliminaUtente.tornahome.clicked.connect(self.passaGestioneUtenti)
 
     def eliminaUtente(self):
-        deleteQuery = "DELETE FROM sicurezza where nome_utente = '%s'" % (''.join(self.utenteView.eliminaUtente.ricercauser.text()))
-
-        checkquery = "SELECT nome_utente FROM sicurezza WHERE nome_utente = '%s'" % (''.join(self.utenteView.eliminaUtente.ricercauser.text()))
-        self.utenteModel.c.execute(checkquery)
-        result = self.utenteModel.c.fetchone()
-        if result == None:
+        nome_utente = self.utenteView.getEliminaLineEdit()
+        result = self.tableUtente.deleteQuery(nome_utente)
+        print(result)
+        if result == 0:
             self.utenteView.warnElimina()
-        else:
-            self.utenteModel.c.execute(deleteQuery)
-            self.utenteModel.conn.commit()
+        if result == 1:
             self.utenteView.correttoEliminazione()
 
 
@@ -93,42 +89,32 @@ class ControllerUtente(QMainWindow):
 
 
     def esistenzaDipendente(self):
-        existQuery = "SELECT cf FROM Dipendenti WHERE cf = '%s'" % (''.join(self.utenteView.ricercaCf.ricercacfdip.text()))
+        cf = self.utenteView.getRircercaLineEdit()
 
-        self.utenteModel.c.execute(existQuery)
-        result = self.utenteModel.c.fetchone()
-        if result == None:
+        result = self.tableUtente.checkExistingcf(cf)
+
+        if result == 0:
             self.utenteView.warnRicerca()
             self.passaGestioneUtenti()
         else:
-            cf = self.utenteView.ricercaCf.ricercacfdip.text()
             self.list.append(cf)
             self.passaInserisciUtente()
 
     def creaUtente(self):
-        query = "SELECT nome_utente from sicurezza where nome_utente = '%s' " % (''.join(self.utenteView.inserisciUtente.username.text()))
-        self.utenteModel.c.execute(query)
-        print("fatto")
-        result = self.utenteModel.c.fetchone()
-        print(result)
+        passwordsCheck = self.utenteView.checkPasswords()
 
-        if result == None:
+        if passwordsCheck:
+            username, password = self.utenteView.getInsertLineEdit()
+            cf = self.list[0]
+            params = {'nome_utente' : username, 'pass': password,'nome_dipendente':cf }
+            result = self.tableUtente.insertQuery(params)
 
-            if self.utenteView.inserisciUtente.password.text() == self.utenteView.inserisciUtente.confermapassword.text():
-                insertQuery = "INSERT INTO sicurezza VALUES ('%s', '%s', '%s')" % (''.join(self.utenteView.inserisciUtente.username.text()),
-                                                                               ''.join(self.utenteView.inserisciUtente.password.text()),
-                                                                               ''.join(self.list[0]))
-                self.utenteModel.c.execute(insertQuery)
-                self.utenteModel.conn.commit()
-
-                updateDip = "UPDATE Dipendenti SET username = '%s' WHERE cf ='%s' " % (''.join(self.utenteView.inserisciUtente.username.text()),
-                                                                                   ''.join(self.list[0]))
-                self.list.clear()
-                self.utenteModel.c.execute(updateDip)
-                self.utenteModel.conn.commit()
+            if result == 1:
                 self.utenteView.correttoInserimento()
-
+            if result == 2:
+                self.utenteView.warnMaxOneUser()
             else:
-                self.utenteView.warnInserimento()
+                self.utenteView.warnUtenteEsistente()
         else:
-            self.utenteView.warnUtenteEsistente()
+            self.utenteView.warnInserimento()
+
