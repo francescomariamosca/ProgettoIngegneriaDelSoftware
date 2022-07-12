@@ -10,24 +10,24 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from Campi.Controller.ControllerCampi import ControllerCampi
+from Campi.Logica.LogicaCampi import LogicaCampi
 from Dipendenti.Logica.LogicaDipendente import LogicaDipendente
-from Fornitori.Logica.LogicaFornitore import ControllerFornitori
-from Liquidita.Controller.ControllerLiquidita import ControllerLiquidita
-from Sicurezza.GestioneUtente.Logica.LogicaUtente import ControllerUtente
-from Soci.Logica.LogicaSocio import ControllerSocio
+from Fornitori.Logica.LogicaFornitore import LogicaFornitore
+from Liquidita.Logica.LogicaLiquidita import LogicaLiquidita
+from Sicurezza.GestioneUtente.Logica.LogicaUtente import LogicaUtente
+from Soci.Logica.LogicaSocio import LogicaSocio
 from Utility import source
 
 
 
 class VistaHome(object):
     def __init__(self, home):
-        self.controllerDipendente = LogicaDipendente(home)
-        self.controllerSoci = ControllerSocio(home)
-        self.controllerUtente = ControllerUtente(home)
-        self.controllerCampi = ControllerCampi(home)
-        self.controllerLiquidita = ControllerLiquidita(home)
-        self.controllerFornitori = ControllerFornitori(home)
+        self.logicaDipendente = LogicaDipendente(home)
+        self.logicaSoci = LogicaSocio(home)
+        self.logicaUtente = LogicaUtente(home)
+        self.logicaCampi = LogicaCampi(home)
+        self.logicaLiquidita = LogicaLiquidita(home)
+        self.logicaFornitori = LogicaFornitore(home)
 
 
     def setupUi(self, MainWindow):
@@ -200,19 +200,19 @@ class VistaHome(object):
         self.campi.setText(_translate("MainWindow", "Prenotazione Campi"))
 
     def passaDipendenti(self):
-        self.dipendenti.clicked.connect(self.controllerDipendente.passaDipendenti)
+        self.dipendenti.clicked.connect(self.logicaDipendente.passaDipendenti)
 
     def passaSoci(self):
-        self.soci.clicked.connect(self.controllerSoci.passaSoci)
+        self.soci.clicked.connect(self.logicaSoci.passaSoci)
 
     def passaUtenti(self):
-        self.sicurezza.clicked.connect(self.controllerUtente.passaGestioneUtenti)
+        self.sicurezza.clicked.connect(self.logicaUtente.passaGestioneUtenti)
 
     def passaCampi(self):
-        self.campi.clicked.connect(self.controllerCampi.passaCampi)
+        self.campi.clicked.connect(self.logicaCampi.passaCampi)
 
     def passaLiquidita(self):
-        self.contabilita.clicked.connect(self.controllerLiquidita.passaLiquidita)
+        self.contabilita.clicked.connect(self.logicaLiquidita.passaLiquidita)
 
     def passaFornitori(self):
-        self.fornitori.clicked.connect(self.controllerFornitori.passaFornitori)
+        self.fornitori.clicked.connect(self.logicaFornitori.passaFornitori)

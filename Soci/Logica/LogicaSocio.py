@@ -11,7 +11,7 @@ import smtplib
 from Utility.email import email
 
 
-class ControllerSocio(QMainWindow):
+class LogicaSocio(QMainWindow):
     def __init__(self, home):
         super(QMainWindow, self).__init__()
         self.home = home

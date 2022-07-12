@@ -5,7 +5,7 @@ from GestioneDatabase.QuerySicurezza.TableSicurezza import TableSicurezza
 from Sicurezza.GestioneUtente.View.UtentiView import UtentiView
 
 
-class ControllerUtente(QMainWindow):
+class LogicaUtente(QMainWindow):
     def __init__(self, home):
         super(QMainWindow, self).__init__()
         self.home = home

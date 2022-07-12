@@ -12,6 +12,7 @@ class TableInterface(ABC):
         self.c.execute("CREATE TABLE IF NOT EXISTS Fornitori(id_fornitore INTEGER PRIMARY KEY, nome_azienda text NOT NULL, email text, telefono text, settore text, citta text, via text)")
         self.c.execute("CREATE TABLE IF NOT EXISTS Soci(id_socio INTEGER PRIMARY KEY , e_mail text, CF text NOT NULL, nome_cliente text NOT NULL, cognome_cliente text NOT NULL, telefono text, Data_abbonamento text NOT NULL )")
         self.c.execute("CREATE TABLE IF NOT EXISTS sicurezza(nome_utente text PRIMARY KEY, pass text not null , nome_dipendente text not null)")
+        self.c.execute("CREATE TABLE IF NOT EXISTS Campi (data_prenotazione text not null, orario_prenotazione text not null, tipo_campo text not null, id_giocatore1 text not null, id_giocatore2 text, id_giocatore3 text, id_giocatore4 text, PRIMARY KEY (data_prenotazione, orario_prenotazione, tipo_campo))")
 
 
     @abstractmethod

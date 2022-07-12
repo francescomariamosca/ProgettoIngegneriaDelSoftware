@@ -23,3 +23,17 @@ class CampiView(QMainWindow):
 
     def correttoInserimento(self):
         self.message = QMessageBox.information(self, " PERFETTO! ", " La prenotazione è stata inserita con successo")
+
+    def getTable(self):
+        campo = self.vistaCampi.setcampo.currentText()
+        ora = self.vistaCampi.setora.currentText()
+
+        return campo, ora
+
+    def getInserisciLineEdit(self):
+        g1 = self.inserisciGiocatori.G1.text()
+        g2 = self.inserisciGiocatori.G2.text()
+        g3 = self.inserisciGiocatori.G3.text()
+        g4 = self.inserisciGiocatori.G4.text()
+
+        return g1, g2, g3, g4

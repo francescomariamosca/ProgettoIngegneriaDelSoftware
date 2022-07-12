@@ -4,7 +4,7 @@ from PyQt5 import QtWidgets
 from Liquidita.View.LiquiditaView import LiquiditaView
 
 
-class ControllerLiquidita(QMainWindow):
+class LogicaLiquidita(QMainWindow):
     def __init__(self, home):
         super(QMainWindow, self).__init__()
         self.home = home

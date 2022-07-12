@@ -5,7 +5,7 @@ from Fornitori.View.FornitoriView import FornitoriView
 from GestioneDatabase.QueryGestioneFornitori.TableFornitori import TableFornitori
 
 
-class ControllerFornitori(QMainWindow):
+class LogicaFornitore(QMainWindow):
     def __init__(self, home):
         super(QMainWindow, self).__init__()
         self.home = home

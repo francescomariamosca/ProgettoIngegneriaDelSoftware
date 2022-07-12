@@ -2,21 +2,21 @@
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5 import QtWidgets
 
-from Campi.Model.ModelCampi import ModelCampi
 from Campi.View.CampiView import CampiView
 from PyQt5.QtCore import QDate
 from datetime import date
 
+from GestioneDatabase.QueryGestioneCampi.TableCampi import TableCampi
 from GestioneDatabase.QueryGestioneSoci.TableSoci import TableSoci
 from Utility.email import email
 
 
-class ControllerCampi(QMainWindow):
+class LogicaCampi(QMainWindow):
     def __init__(self, home):
         super(QMainWindow, self).__init__()
         self.home = home
         self.viewCampi = CampiView()
-        self.modelCampi = ModelCampi()
+        self.tableCampi = TableCampi()
         self.tableSoci = TableSoci()
         self.mail = email()
         self.datePy = ''
@@ -24,6 +24,7 @@ class ControllerCampi(QMainWindow):
         self.campo = ''
         self.ora = ''
         self.listEmail = []
+        self.flag = False
 
 
     def passaCampi(self):
@@ -49,8 +50,8 @@ class ControllerCampi(QMainWindow):
         self.viewCampi.vistaCampi.setupUi(self.viewCampi.vistaPrenotazioni.window)
         self.uploadTableCampi()
         self.loadTableSoci()
-        self.viewCampi.vistaPrenotazioni.window.show()
         self.cambiaLabel()
+        self.viewCampi.vistaPrenotazioni.window.show()
         self.passaElimina()
 
 
@@ -82,64 +83,53 @@ class ControllerCampi(QMainWindow):
         #la label e poi la utilizziamo per il database. Il bottone ci fa passare all'altra finestra
         result = self.viewCampi.vistaPrenotazioni.setgiorno.date().toPyDate()
         self.datePy = result.strftime("%Y-%m-%d")
-        print(self.datePy)
+        self.flag = True
+
 
 
 
     def cambiaLabel(self):
-        self.viewCampi.vistaCampi.annomesegiorno.setText(self.datePy)
+        if(self.flag):
+            print("dentro")
+            self.viewCampi.vistaCampi.annomesegiorno.setText(self.datePy)
+        else:
+            result = date.today().strftime("%Y-%m-%d")
+            self.datePy = result
+            print(self.datePy)
+            self.flag = False
+            self.viewCampi.vistaCampi.annomesegiorno.setText(self.datePy)
 
     def eliminaPrenotazione(self):
-        self.campo = self.viewCampi.vistaCampi.setcampo.currentText()
-        self.ora = self.viewCampi.vistaCampi.setora.currentText()
-
-        deleteQuery = "DELETE  FROM Campi where tipo_campo = '%s' and orario_prenotazione = '%s' " % (''.join(self.campo),
-                                                                                                      ''.join(self.ora))
-
-
+        self.campo, self.ora = self.viewCampi.getTable()
+        result = self.tableCampi.deleteQuery(self.campo, self.ora, self.datePy)
+        print(result)
         self.invioMailCancellazione()
-        self.modelCampi.c.execute(deleteQuery)
-        self.modelCampi.conn.commit()
         self.viewCampi.correttaCancellazione()
 
     def controllaDisponibilita(self):
-        self.campo = self.viewCampi.vistaCampi.setcampo.currentText()
-        self.ora = self.viewCampi.vistaCampi.setora.currentText()
-
-        checkQuery = "SELECT id_giocatore1 FROM Campi where tipo_campo = '%s' and orario_prenotazione = '%s' and data_prenotazione = '%s' " % (''.join(self.campo),
-                                                                                                                                                ''.join(self.ora),
-                                                                                                                                               ''.join(self.datePy))
-
-        self.modelCampi.c.execute(checkQuery)
-        result = self.modelCampi.c.fetchone()
-        print (result)
-
+        self.campo, self.ora = self.viewCampi.getTable()
+        result = self.tableCampi.checkQuery(self.campo, self.ora, self.datePy)
         if result == None:
             self.passaInserisciGiocatori()
-            print(self.campo, self.ora)
-
         else:
             self.viewCampi.warnPrenotazione()
 
 
 
     def inserisciGiocatori(self):
-        insertQuery = "INSERT INTO Campi VALUES ('%s','%s','%s','%s','%s','%s','%s')" % (''.join(self.datePy),
-                                                                                         ''.join(self.ora),
-                                                                                         ''.join(self.campo),
-                                                                                         ''.join(self.viewCampi.inserisciGiocatori.G1.text()),
-                                                                                         ''.join(self.viewCampi.inserisciGiocatori.G2.text()),
-                                                                                         ''.join(self.viewCampi.inserisciGiocatori.G3.text()),
-                                                                                         ''.join(self.viewCampi.inserisciGiocatori.G4.text()))
+        g1, g2, g3, g4 = self.viewCampi.getInserisciLineEdit()
 
+        print(self.datePy)
+        params = {'data_prenotazione': self.datePy, 'orario_prenotazione': self.ora, 'tipo_campo': self.campo, 'id_giocatore1': g1, 'id_giocatore2': g2, 'id_giocatore3': g3, 'id_giocatore4': g4 }
 
-        if self.viewCampi.inserisciGiocatori.G1.text() == " ":
-            self.viewCampi.warnPrenotazione()
-        else:
-            self.modelCampi.c.execute(insertQuery)
-            self.modelCampi.conn.commit()
+        result = self.tableCampi.insertQuery(params)
+
+        if result == None:
             self.viewCampi.correttoInserimento()
             self.invioMailPrenotazione()
+        else:
+            self.viewCampi.warnPrenotazione()
+
 
     def checkCampo(self):
         if self.campo == "Calcetto":
@@ -149,45 +139,20 @@ class ControllerCampi(QMainWindow):
             self.viewCampi.inserisciGiocatori.G4.setEnabled(False)
 
     def invioMailPrenotazione(self):
-        id1= self.viewCampi.inserisciGiocatori.G1.text()
-        id2= self.viewCampi.inserisciGiocatori.G2.text()
-        id3= self.viewCampi.inserisciGiocatori.G3.text()
-        id4= self.viewCampi.inserisciGiocatori.G4.text()
+        g1, g2, g3, g4 = self.viewCampi.getInserisciLineEdit()
 
-
-
-        querymail1 = "SELECT Soci.e_mail, Soci.nome_cliente, Soci.cognome_cliente FROM Soci, Campi WHERE Soci.id_socio = Campi.id_giocatore1 and Campi.id_giocatore1 = '%s'" %(''.join(id1))
-        querymail2 = "SELECT Soci.e_mail, Soci.nome_cliente, Soci.cognome_cliente FROM Soci, Campi WHERE Soci.id_socio = Campi.id_giocatore2 and Campi.id_giocatore2 = '%s'" %(''.join(id2))
-        querymail3 = "SELECT Soci.e_mail, Soci.nome_cliente, Soci.cognome_cliente FROM Soci, Campi WHERE Soci.id_socio = Campi.id_giocatore3 and Campi.id_giocatore3 = '%s'" %(''.join(id3))
-        querymail4 = "SELECT Soci.e_mail, Soci.nome_cliente, Soci.cognome_cliente FROM Soci, Campi WHERE Soci.id_socio = Campi.id_giocatore4 and Campi.id_giocatore4 = '%s'" %(''.join(id4))
-
-
-        self.modelCampi.c.execute(querymail1)
-        result1 = self.modelCampi.c.fetchone()
-
-        self.modelCampi.c.execute(querymail2)
-        result2 = self.modelCampi.c.fetchone()
-
-        self.modelCampi.c.execute(querymail3)
-        result3 = self.modelCampi.c.fetchone()
-
-        self.modelCampi.c.execute(querymail4)
-        result4 = self.modelCampi.c.fetchone()
+        result1, result2, result3, result4 = self.tableCampi.sendReservationMail(g1, g2, g3, g4)
 
         if result1 == None:
             pass
         else:
             mail = result1[0]
-            name = result1 [1]
-            cognome = result1 [2]
-            print("fatto")
-            print(mail)
-
+            name = result1[1]
+            cognome = result1[2]
             if mail == "":
                 pass
             else:
                 self.mail.emailPrenotazioneAvvenuta(mail, name, cognome, self.datePy, self.ora, self.campo)
-            print("ok")
 
         if result2 == None:
             pass
@@ -200,7 +165,6 @@ class ControllerCampi(QMainWindow):
                 pass
             else:
                 self.mail.emailPrenotazioneAvvenuta(mail, name, cognome, self.datePy, self.ora, self.campo)
-            print("ok")
 
         if result3 == None:
             pass
@@ -213,7 +177,6 @@ class ControllerCampi(QMainWindow):
                 pass
             else:
                 self.mail.emailPrenotazioneAvvenuta(mail, name, cognome, self.datePy, self.ora, self.campo)
-            print("ok")
 
         if result4 == None:
             pass
@@ -226,38 +189,10 @@ class ControllerCampi(QMainWindow):
                 pass
             else:
                 self.mail.emailPrenotazioneAvvenuta(mail, name, cognome, self.datePy, self.ora, self.campo)
-            print("ok")
 
     def invioMailCancellazione(self):
-        self.campo = self.viewCampi.vistaCampi.setcampo.currentText()
-        self.ora = self.viewCampi.vistaCampi.setora.currentText()
-        query1 = "SELECT Soci.e_mail, Soci.nome_cliente, Soci.cognome_cliente FROM Soci, Campi WHERE Soci.id_socio = Campi.id_giocatore1  and Campi.orario_prenotazione='%s'and Campi.tipo_campo = '%s' and Campi.data_prenotazione = '%s'" %(''.join(self.ora),
-                                                                                                                                                                                                                                              ''.join(self.campo),
-                                                                                                                                                                                                                                              ''.join(self.datePy))
-        self.modelCampi.c.execute(query1)
-        result1 = self.modelCampi.c.fetchone()
-        print(result1)
-
-        query2 = "SELECT Soci.e_mail, Soci.nome_cliente, Soci.cognome_cliente FROM Soci, Campi WHERE Soci.id_socio = Campi.id_giocatore2  and Campi.orario_prenotazione='%s'and Campi.tipo_campo = '%s' and Campi.data_prenotazione = '%s'" %(''.join(self.ora),
-                                                                                                                                                                                                                                              ''.join(self.campo),
-                                                                                                                                                                                                                                              ''.join(self.datePy))
-        self.modelCampi.c.execute(query2)
-        result2 = self.modelCampi.c.fetchone()
-        print(result2)
-
-
-        query3 = "SELECT Soci.e_mail, Soci.nome_cliente, Soci.cognome_cliente FROM Soci, Campi WHERE Soci.id_socio = Campi.id_giocatore3  and Campi.orario_prenotazione='%s'and Campi.tipo_campo = '%s' and Campi.data_prenotazione = '%s'" %(''.join(self.ora),
-                                                                                                                                                                                                                                              ''.join(self.campo),
-                                                                                                                                                                                                                                              ''.join(self.datePy))
-        self.modelCampi.c.execute(query3)
-        result3 = self.modelCampi.c.fetchone()
-
-        query4 = "SELECT Soci.e_mail, Soci.nome_cliente, Soci.cognome_cliente FROM Soci, Campi WHERE Soci.id_socio = Campi.id_giocatore4  and Campi.orario_prenotazione='%s'and Campi.tipo_campo = '%s' and Campi.data_prenotazione = '%s'" %(''.join(self.ora),
-                                                                                                                                                                                                                                              ''.join(self.campo),
-                                                                                                                                                                                                                                              ''.join(self.datePy))
-        self.modelCampi.c.execute(query4)
-        result4 = self.modelCampi.c.fetchone()
-
+        self.campo, self.ora = self.viewCampi.getTable()
+        result1, result2, result3, result4 = self.tableCampi.deleteReservationMail(self.ora, self.campo, self.datePy)
 
         if result1 == None:
             pass
@@ -317,8 +252,8 @@ class ControllerCampi(QMainWindow):
 
 
     def uploadTableCampi(self):
-            query = "SELECT  id_giocatore1, id_giocatore2, id_giocatore3, id_giocatore4, tipo_campo, orario_prenotazione FROM Campi WHERE data_prenotazione ='%s' " % (''.join(self.datePy))
-            for row in self.modelCampi.c.execute(query):
+            result = self.tableCampi.loadData(self.datePy)
+            for row in result:
                 player1 = row[0]
                 player2 = row[1]
                 player3 = row[2]
