@@ -46,7 +46,7 @@ class TableSicurezza(TableInterface):
             return 1
 
     def modifyQuery(self, params: dict):
-        #non è possibile modificare un utente
+        #non è possibile modificare un utente fffffff
         pass
 
     def searchQuery(self, params: dict):
