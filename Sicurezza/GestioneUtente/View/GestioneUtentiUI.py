@@ -10,14 +10,12 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from GestioneDatabase.QuerySicurezza.TableSicurezza import TableSicurezza
 
 
 class GestioneUtentiUI(object):
     def setupUi(self, MainWindow):
-        self.tableUtente = TableSicurezza()
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(697 , 528)
+        MainWindow.resize(697, 528)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
@@ -126,7 +124,6 @@ class GestioneUtentiUI(object):
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-        self.loadData()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -141,14 +138,3 @@ class GestioneUtentiUI(object):
         self.eliminautente.setText(_translate("MainWindow", "Elimina Utente"))
         self.tabellaUtente.setColumnWidth(0, 300)
         self.tabellaUtente.setColumnWidth(1, 300)
-
-    def loadData(self):
-        subquery = "SELECT nome_dipendente, nome_utente FROM sicurezza"
-        rowindex = 0
-
-        self.tabellaUtente.setRowCount(15)
-        for row in self.tableUtente.c.execute(subquery):
-            self.tabellaUtente.setItem(rowindex, 0, QtWidgets.QTableWidgetItem(row[0]))
-            self.tabellaUtente.setItem(rowindex, 1, QtWidgets.QTableWidgetItem(row[1]))
-            rowindex += 1
-

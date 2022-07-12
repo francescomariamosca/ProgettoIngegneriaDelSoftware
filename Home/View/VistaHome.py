@@ -11,7 +11,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 from Campi.Controller.ControllerCampi import ControllerCampi
-from Dipendenti.Logica.LogicaDipendente import ControllerDipendente
+from Dipendenti.Logica.LogicaDipendente import LogicaDipendente
 from Fornitori.Logica.LogicaFornitore import ControllerFornitori
 from Liquidita.Controller.ControllerLiquidita import ControllerLiquidita
 from Sicurezza.GestioneUtente.Logica.LogicaUtente import ControllerUtente
@@ -22,7 +22,7 @@ from Utility import source
 
 class VistaHome(object):
     def __init__(self, home):
-        self.controllerDipendente = ControllerDipendente(home)
+        self.controllerDipendente = LogicaDipendente(home)
         self.controllerSoci = ControllerSocio(home)
         self.controllerUtente = ControllerUtente(home)
         self.controllerCampi = ControllerCampi(home)

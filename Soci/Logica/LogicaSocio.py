@@ -28,6 +28,7 @@ class ControllerSocio(QMainWindow):
 
         self.window = QtWidgets.QMainWindow()
         self.socioView.homeSoci.setupUi(self.window)
+        self.loadsocioTable()
         self.window.show()
         if self.called == False:
             self.infoScadenzAbbonamento()
@@ -207,3 +208,23 @@ class ControllerSocio(QMainWindow):
 
         self.listAbbonamento.clear()
         self.called = True
+
+    def loadsocioTable(self):
+
+        allSoci = self.tableSocio.loadDataCampi()
+        rowindex = 0
+        self.socioView.homeSoci.tabellasoci.setRowCount(50)
+
+        for row in allSoci:
+            id_cliente = row[0]
+            converted_id = str(id_cliente)
+            self.socioView.homeSoci.tabellasoci.setItem(rowindex, 0, QtWidgets.QTableWidgetItem(converted_id))
+            self.socioView.homeSoci.tabellasoci.setItem(rowindex, 1, QtWidgets.QTableWidgetItem(row[1]))
+            self.socioView.homeSoci.tabellasoci.setItem(rowindex, 2, QtWidgets.QTableWidgetItem(row[2]))
+            self.socioView.homeSoci.tabellasoci.setItem(rowindex, 3, QtWidgets.QTableWidgetItem(row[3]))
+            self.socioView.homeSoci.tabellasoci.setItem(rowindex, 4, QtWidgets.QTableWidgetItem(row[4]))
+            self.socioView.homeSoci.tabellasoci.setItem(rowindex, 5, QtWidgets.QTableWidgetItem(row[5]))
+            date = row[6]
+            converted_date = str(date)
+            self.socioView.homeSoci.tabellasoci.setItem(rowindex, 6, QtWidgets.QTableWidgetItem(converted_date))
+            rowindex += 1

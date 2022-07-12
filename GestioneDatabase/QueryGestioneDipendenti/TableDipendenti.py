@@ -89,3 +89,9 @@ class TableDipendenti(TableInterface):
         updateDip = "UPDATE Dipendenti SET username = '%s' WHERE cf ='%s' " % (''.join(nome_utente),''.join(cf))
         self.c.execute(updateDip)
         self.conn.commit()
+
+    def loadData(self):
+        query = "SELECT * FROM Dipendenti"
+        allDipendenti = self.c.execute(query)
+        self.conn.commit()
+        return allDipendenti

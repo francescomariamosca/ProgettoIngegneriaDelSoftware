@@ -7,6 +7,7 @@ from Campi.View.CampiView import CampiView
 from PyQt5.QtCore import QDate
 from datetime import date
 
+from GestioneDatabase.QueryGestioneSoci.TableSoci import TableSoci
 from Utility.email import email
 
 
@@ -16,6 +17,7 @@ class ControllerCampi(QMainWindow):
         self.home = home
         self.viewCampi = CampiView()
         self.modelCampi = ModelCampi()
+        self.tableSoci = TableSoci()
         self.mail = email()
         self.datePy = ''
         self.list = []
@@ -45,7 +47,8 @@ class ControllerCampi(QMainWindow):
     def passaVisualizzaCampi(self):
         self.viewCampi.vistaPrenotazioni.window = QtWidgets.QMainWindow()
         self.viewCampi.vistaCampi.setupUi(self.viewCampi.vistaPrenotazioni.window)
-        self.uploadTable()
+        self.uploadTableCampi()
+        self.loadTableSoci()
         self.viewCampi.vistaPrenotazioni.window.show()
         self.cambiaLabel()
         self.passaElimina()
@@ -85,165 +88,6 @@ class ControllerCampi(QMainWindow):
 
     def cambiaLabel(self):
         self.viewCampi.vistaCampi.annomesegiorno.setText(self.datePy)
-
-
-    def uploadTable(self):
-        query = "SELECT  id_giocatore1, id_giocatore2, id_giocatore3, id_giocatore4, tipo_campo, orario_prenotazione FROM Campi WHERE data_prenotazione ='%s' " % (''.join(self.datePy))
-        for row in self.modelCampi.c.execute(query):
-            player1 = row[0]
-            player2 = row[1]
-            player3 = row[2]
-            player4 = row[3]
-            campo = row[4]
-            orario = row[5]
-            self.list.append((player1,player2, player3, player4, campo, orario))
-
-        for id1, id2, id3, id4, field, time in self.list:
-            if field == 'Calcetto':
-                if time == '9-10':
-                    self.viewCampi.vistaCampi.calcetto.setItem(0, 0, QtWidgets.QTableWidgetItem(id1))
-                elif time == '10-11':
-                    self.viewCampi.vistaCampi.calcetto.setItem(1, 0, QtWidgets.QTableWidgetItem(id1))
-                elif time == '11-12':
-                    self.viewCampi.vistaCampi.calcetto.setItem(2, 0, QtWidgets.QTableWidgetItem(id1))
-                elif time == '12-13':
-                    self.viewCampi.vistaCampi.calcetto.setItem(3, 0, QtWidgets.QTableWidgetItem(id1))
-                elif time == '13-14':
-                    self.viewCampi.vistaCampi.calcetto.setItem(4, 0, QtWidgets.QTableWidgetItem(id1))
-                elif time == '14-15':
-                    self.viewCampi.vistaCampi.calcetto.setItem(5, 0, QtWidgets.QTableWidgetItem(id1))
-                elif time == '15-16':
-                    self.viewCampi.vistaCampi.calcetto.setItem(6, 0, QtWidgets.QTableWidgetItem(id1))
-                elif time == '16-17':
-                    self.viewCampi.vistaCampi.calcetto.setItem(7, 0, QtWidgets.QTableWidgetItem(id1))
-                elif time == '17-18':
-                    self.viewCampi.vistaCampi.calcetto.setItem(8, 0, QtWidgets.QTableWidgetItem(id1))
-                elif time == '18-19':
-                    self.viewCampi.vistaCampi.calcetto.setItem(9, 0, QtWidgets.QTableWidgetItem(id1))
-                elif time == '19-20':
-                    self.viewCampi.vistaCampi.calcetto.setItem(10, 0, QtWidgets.QTableWidgetItem(id1))
-                elif time == '20-21':
-                    self.viewCampi.vistaCampi.calcetto.setItem(11, 0, QtWidgets.QTableWidgetItem(id1))
-                elif time == '21-22':
-                    self.viewCampi.vistaCampi.calcetto.setItem(12, 0, QtWidgets.QTableWidgetItem(id1))
-
-            elif field == 'Padel 1 ':
-
-                if time == '9-10':
-                    self.viewCampi.vistaCampi.campipadel.setItem(0, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
-                elif time == '10-11':
-                    self.viewCampi.vistaCampi.campipadel.setItem(1, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
-                elif time == '11-12':
-                    self.viewCampi.vistaCampi.campipadel.setItem(2, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
-                elif time == '12-13':
-                    self.viewCampi.vistaCampi.campipadel.setItem(3, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
-                elif time == '13-14':
-                    self.viewCampi.vistaCampi.campipadel.setItem(4, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
-                elif time == '14-15':
-                    self.viewCampi.vistaCampi.campipadel.setItem(5, 0, QtWidgets.QTableWidgetItem( id1 + " " + id2 + " " + id3 + " " + id4))
-                elif time == '15-16':
-                    self.viewCampi.vistaCampi.campipadel.setItem(6, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
-                elif time == '16-17':
-                    self.viewCampi.vistaCampi.campipadel.setItem(7, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
-                elif time == '17-18':
-                    self.viewCampi.vistaCampi.campipadel.setItem(8, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
-                elif time == '18-19':
-                    self.viewCampi.vistaCampi.campipadel.setItem(9, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
-                elif time == '19-20':
-                    self.viewCampi.vistaCampi.campipadel.setItem(10, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
-                elif time == '20-21':
-                    self.viewCampi.vistaCampi.campipadel.setItem(11, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
-                elif time == '21-22':
-                    self.viewCampi.vistaCampi.campipadel.setItem(12, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
-
-            elif field == 'Padel 2':
-
-                    if time == '9-10':
-                        self.viewCampi.vistaCampi.campipadel.setItem(0, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " +id4 ))
-                    elif time == '10-11':
-                        self.viewCampi.vistaCampi.campipadel.setItem(1, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " +id4 ))
-                    elif time == '11-12':
-                        self.viewCampi.vistaCampi.campipadel.setItem(2, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " +id4 ))
-                    elif time == '12-13':
-                        self.viewCampi.vistaCampi.campipadel.setItem(3, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " +id4 ))
-                    elif time == '13-14':
-                        self.viewCampi.vistaCampi.campipadel.setItem(4, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " +id4 ))
-                    elif time == '14-15':
-                        self.viewCampi.vistaCampi.campipadel.setItem(5, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " +id4 ))
-                    elif time == '15-16':
-                        self.viewCampi.vistaCampi.campipadel.setItem(6, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " +id4 ))
-                    elif time == '16-17':
-                        self.viewCampi.vistaCampi.campipadel.setItem(7, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " +id4 ))
-                    elif time == '17-18':
-                        self.viewCampi.vistaCampi.campipadel.setItem(8, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " +id4 ))
-                    elif time == '18-19':
-                        self.viewCampi.vistaCampi.campipadel.setItem(9, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " +id4 ))
-                    elif time == '19-20':
-                        self.viewCampi.vistaCampi.campipadel.setItem(10, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " +id4 ))
-                    elif time == '20-21':
-                        self.viewCampi.vistaCampi.campipadel.setItem(11, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " +id4 ))
-                    elif time == '21-22':
-                        self.viewCampi.vistaCampi.campipadel.setItem(12, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " +id4 ))
-
-            elif field == 'Campo CENTRALE (Terra Rossa)':
-
-                        if time == '9-10':
-                            self.viewCampi.vistaCampi.campitennis.setItem(0, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
-                        elif time == '10-11':
-                            self.viewCampi.vistaCampi.campitennis.setItem(1, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
-                        elif time == '11-12':
-                            self.viewCampi.vistaCampi.campitennis.setItem(2, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
-                        elif time == '12-13':
-                            self.viewCampi.vistaCampi.campitennis.setItem(3, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
-                        elif time == '13-14':
-                            self.viewCampi.vistaCampi.campitennis.setItem(4, 0, QtWidgets.QTableWidgetItem( id1 + " " + id2 + " " + id3 + " " + id4))
-                        elif time == '14-15':
-                            self.viewCampi.vistaCampi.campitennis.setItem(5, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
-                        elif time == '15-16':
-                            self.viewCampi.vistaCampi.campitennis.setItem(6, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
-                        elif time == '16-17':
-                            self.viewCampi.vistaCampi.campitennis.setItem(7, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
-                        elif time == '17-18':
-                            self.viewCampi.vistaCampi.campitennis.setItem(8, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
-                        elif time == '18-19':
-                            self.viewCampi.vistaCampi.campitennis.setItem(9, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
-                        elif time == '19-20':
-                            self.viewCampi.vistaCampi.campitennis.setItem(10, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
-                        elif time == '20-21':
-                            self.viewCampi.vistaCampi.campitennis.setItem(11, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
-                        elif time == '21-22':
-                            self.viewCampi.vistaCampi.campitennis.setItem(12, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
-
-            elif field == 'Campo 2 (Terra Rossa)':
-
-                if time == '9-10':
-                    self.viewCampi.vistaCampi.campitennis.setItem(0, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
-                elif time == '10-11':
-                    self.viewCampi.vistaCampi.campitennis.setItem(1, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
-                elif time == '11-12':
-                    self.viewCampi.vistaCampi.campitennis.setItem(2, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
-                elif time == '12-13':
-                    self.viewCampi.vistaCampi.campitennis.setItem(3, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
-                elif time == '13-14':
-                    self.viewCampi.vistaCampi.campitennis.setItem(4, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
-                elif time == '14-15':
-                    self.viewCampi.vistaCampi.campitennis.setItem(5, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
-                elif time == '15-16':
-                    self.viewCampi.vistaCampi.campitennis.setItem(6, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
-                elif time == '16-17':
-                    self.viewCampi.vistaCampi.campitennis.setItem(7, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
-                elif time == '17-18':
-                    self.viewCampi.vistaCampi.campitennis.setItem(8, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
-                elif time == '18-19':
-                    self.viewCampi.vistaCampi.campitennis.setItem(9, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
-                elif time == '19-20':
-                    self.viewCampi.vistaCampi.campitennis.setItem(10, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
-                elif time == '20-21':
-                    self.viewCampi.vistaCampi.campitennis.setItem(11, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
-                elif time == '21-22':
-                    self.viewCampi.vistaCampi.campitennis.setItem(12, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
-
-        self.list.clear()
 
     def eliminaPrenotazione(self):
         self.campo = self.viewCampi.vistaCampi.setcampo.currentText()
@@ -472,5 +316,172 @@ class ControllerCampi(QMainWindow):
             print("fatto")
 
 
+    def uploadTableCampi(self):
+            query = "SELECT  id_giocatore1, id_giocatore2, id_giocatore3, id_giocatore4, tipo_campo, orario_prenotazione FROM Campi WHERE data_prenotazione ='%s' " % (''.join(self.datePy))
+            for row in self.modelCampi.c.execute(query):
+                player1 = row[0]
+                player2 = row[1]
+                player3 = row[2]
+                player4 = row[3]
+                campo = row[4]
+                orario = row[5]
+                self.list.append((player1,player2, player3, player4, campo, orario))
 
+            for id1, id2, id3, id4, field, time in self.list:
+                if field == 'Calcetto':
+                    if time == '9-10':
+                        self.viewCampi.vistaCampi.calcetto.setItem(0, 0, QtWidgets.QTableWidgetItem(id1))
+                    elif time == '10-11':
+                        self.viewCampi.vistaCampi.calcetto.setItem(1, 0, QtWidgets.QTableWidgetItem(id1))
+                    elif time == '11-12':
+                        self.viewCampi.vistaCampi.calcetto.setItem(2, 0, QtWidgets.QTableWidgetItem(id1))
+                    elif time == '12-13':
+                        self.viewCampi.vistaCampi.calcetto.setItem(3, 0, QtWidgets.QTableWidgetItem(id1))
+                    elif time == '13-14':
+                        self.viewCampi.vistaCampi.calcetto.setItem(4, 0, QtWidgets.QTableWidgetItem(id1))
+                    elif time == '14-15':
+                        self.viewCampi.vistaCampi.calcetto.setItem(5, 0, QtWidgets.QTableWidgetItem(id1))
+                    elif time == '15-16':
+                        self.viewCampi.vistaCampi.calcetto.setItem(6, 0, QtWidgets.QTableWidgetItem(id1))
+                    elif time == '16-17':
+                        self.viewCampi.vistaCampi.calcetto.setItem(7, 0, QtWidgets.QTableWidgetItem(id1))
+                    elif time == '17-18':
+                        self.viewCampi.vistaCampi.calcetto.setItem(8, 0, QtWidgets.QTableWidgetItem(id1))
+                    elif time == '18-19':
+                        self.viewCampi.vistaCampi.calcetto.setItem(9, 0, QtWidgets.QTableWidgetItem(id1))
+                    elif time == '19-20':
+                        self.viewCampi.vistaCampi.calcetto.setItem(10, 0, QtWidgets.QTableWidgetItem(id1))
+                    elif time == '20-21':
+                        self.viewCampi.vistaCampi.calcetto.setItem(11, 0, QtWidgets.QTableWidgetItem(id1))
+                    elif time == '21-22':
+                        self.viewCampi.vistaCampi.calcetto.setItem(12, 0, QtWidgets.QTableWidgetItem(id1))
 
+                elif field == 'Padel 1 ':
+
+                    if time == '9-10':
+                        self.viewCampi.vistaCampi.campipadel.setItem(0, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
+                    elif time == '10-11':
+                        self.viewCampi.vistaCampi.campipadel.setItem(1, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
+                    elif time == '11-12':
+                        self.viewCampi.vistaCampi.campipadel.setItem(2, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
+                    elif time == '12-13':
+                        self.viewCampi.vistaCampi.campipadel.setItem(3, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
+                    elif time == '13-14':
+                        self.viewCampi.vistaCampi.campipadel.setItem(4, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
+                    elif time == '14-15':
+                        self.viewCampi.vistaCampi.campipadel.setItem(5, 0, QtWidgets.QTableWidgetItem( id1 + " " + id2 + " " + id3 + " " + id4))
+                    elif time == '15-16':
+                        self.viewCampi.vistaCampi.campipadel.setItem(6, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
+                    elif time == '16-17':
+                        self.viewCampi.vistaCampi.campipadel.setItem(7, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
+                    elif time == '17-18':
+                        self.viewCampi.vistaCampi.campipadel.setItem(8, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
+                    elif time == '18-19':
+                        self.viewCampi.vistaCampi.campipadel.setItem(9, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
+                    elif time == '19-20':
+                        self.viewCampi.vistaCampi.campipadel.setItem(10, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
+                    elif time == '20-21':
+                        self.viewCampi.vistaCampi.campipadel.setItem(11, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
+                    elif time == '21-22':
+                        self.viewCampi.vistaCampi.campipadel.setItem(12, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
+
+                elif field == 'Padel 2':
+
+                        if time == '9-10':
+                            self.viewCampi.vistaCampi.campipadel.setItem(0, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " +id4 ))
+                        elif time == '10-11':
+                            self.viewCampi.vistaCampi.campipadel.setItem(1, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " +id4 ))
+                        elif time == '11-12':
+                            self.viewCampi.vistaCampi.campipadel.setItem(2, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " +id4 ))
+                        elif time == '12-13':
+                            self.viewCampi.vistaCampi.campipadel.setItem(3, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " +id4 ))
+                        elif time == '13-14':
+                            self.viewCampi.vistaCampi.campipadel.setItem(4, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " +id4 ))
+                        elif time == '14-15':
+                            self.viewCampi.vistaCampi.campipadel.setItem(5, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " +id4 ))
+                        elif time == '15-16':
+                            self.viewCampi.vistaCampi.campipadel.setItem(6, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " +id4 ))
+                        elif time == '16-17':
+                            self.viewCampi.vistaCampi.campipadel.setItem(7, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " +id4 ))
+                        elif time == '17-18':
+                            self.viewCampi.vistaCampi.campipadel.setItem(8, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " +id4 ))
+                        elif time == '18-19':
+                            self.viewCampi.vistaCampi.campipadel.setItem(9, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " +id4 ))
+                        elif time == '19-20':
+                            self.viewCampi.vistaCampi.campipadel.setItem(10, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " +id4 ))
+                        elif time == '20-21':
+                            self.viewCampi.vistaCampi.campipadel.setItem(11, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " +id4 ))
+                        elif time == '21-22':
+                            self.viewCampi.vistaCampi.campipadel.setItem(12, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " +id4 ))
+
+                elif field == 'Campo CENTRALE (Terra Rossa)':
+
+                            if time == '9-10':
+                                self.viewCampi.vistaCampi.campitennis.setItem(0, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
+                            elif time == '10-11':
+                                self.viewCampi.vistaCampi.campitennis.setItem(1, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
+                            elif time == '11-12':
+                                self.viewCampi.vistaCampi.campitennis.setItem(2, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
+                            elif time == '12-13':
+                                self.viewCampi.vistaCampi.campitennis.setItem(3, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
+                            elif time == '13-14':
+                                self.viewCampi.vistaCampi.campitennis.setItem(4, 0, QtWidgets.QTableWidgetItem( id1 + " " + id2 + " " + id3 + " " + id4))
+                            elif time == '14-15':
+                                self.viewCampi.vistaCampi.campitennis.setItem(5, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
+                            elif time == '15-16':
+                                self.viewCampi.vistaCampi.campitennis.setItem(6, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
+                            elif time == '16-17':
+                                self.viewCampi.vistaCampi.campitennis.setItem(7, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
+                            elif time == '17-18':
+                                self.viewCampi.vistaCampi.campitennis.setItem(8, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
+                            elif time == '18-19':
+                                self.viewCampi.vistaCampi.campitennis.setItem(9, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
+                            elif time == '19-20':
+                                self.viewCampi.vistaCampi.campitennis.setItem(10, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
+                            elif time == '20-21':
+                                self.viewCampi.vistaCampi.campitennis.setItem(11, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
+                            elif time == '21-22':
+                                self.viewCampi.vistaCampi.campitennis.setItem(12, 0, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
+
+                elif field == 'Campo 2 (Terra Rossa)':
+
+                    if time == '9-10':
+                        self.viewCampi.vistaCampi.campitennis.setItem(0, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
+                    elif time == '10-11':
+                        self.viewCampi.vistaCampi.campitennis.setItem(1, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
+                    elif time == '11-12':
+                        self.viewCampi.vistaCampi.campitennis.setItem(2, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
+                    elif time == '12-13':
+                        self.viewCampi.vistaCampi.campitennis.setItem(3, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
+                    elif time == '13-14':
+                        self.viewCampi.vistaCampi.campitennis.setItem(4, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
+                    elif time == '14-15':
+                        self.viewCampi.vistaCampi.campitennis.setItem(5, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
+                    elif time == '15-16':
+                        self.viewCampi.vistaCampi.campitennis.setItem(6, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
+                    elif time == '16-17':
+                        self.viewCampi.vistaCampi.campitennis.setItem(7, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
+                    elif time == '17-18':
+                        self.viewCampi.vistaCampi.campitennis.setItem(8, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
+                    elif time == '18-19':
+                        self.viewCampi.vistaCampi.campitennis.setItem(9, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
+                    elif time == '19-20':
+                        self.viewCampi.vistaCampi.campitennis.setItem(10, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
+                    elif time == '20-21':
+                        self.viewCampi.vistaCampi.campitennis.setItem(11, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
+                    elif time == '21-22':
+                        self.viewCampi.vistaCampi.campitennis.setItem(12, 1, QtWidgets.QTableWidgetItem(id1 + " " + id2 + " " + id3 + " " + id4))
+
+            self.list.clear()
+
+    def loadTableSoci(self):
+        result = self.tableSoci.loadData()
+        rowindex = 0
+        self.viewCampi.vistaCampi.tabellasocicampi.setRowCount(80)
+
+        for row in result:
+            id = row[0]
+            converted_id = str(id)
+            self.viewCampi.vistaCampi.tabellasocicampi.setItem(rowindex, 0, QtWidgets.QTableWidgetItem(converted_id))
+            self.viewCampi.vistaCampi.tabellasocicampi.setItem(rowindex, 1, QtWidgets.QTableWidgetItem(row[1] + " " + row[2]))
+            rowindex += 1

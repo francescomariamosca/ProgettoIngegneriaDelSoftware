@@ -10,12 +10,9 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from Campi.Model.ModelCampi import ModelCampi
-
-
 class VistaHomeCampiUI(object):
     def setupUi(self, MainWindow):
-        self.model = ModelCampi()
+
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1408, 831)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -421,7 +418,6 @@ class VistaHomeCampiUI(object):
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-        self.loadDatiSoci()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -549,21 +545,3 @@ class VistaHomeCampiUI(object):
         self.campipadel.setColumnWidth(1, 170)
         self.tabellasocicampi.setColumnWidth(1, 250)
         self.calcetto.setColumnWidth(0, 300)
-
-
-
-    def loadDatiSoci(self):
-            query = "SELECT id_socio, nome_cliente, cognome_cliente FROM Soci ORDER BY id_socio"
-            rowindex = 0
-
-            self.tabellasocicampi.setRowCount(80)
-
-            for row in self.model.c.execute(query):
-                id = row[0]
-                converted_id = str(id)
-                self.tabellasocicampi.setItem(rowindex, 0, QtWidgets.QTableWidgetItem(converted_id))
-                self.tabellasocicampi.setItem(rowindex, 1, QtWidgets.QTableWidgetItem(row[1] + " " + row[2]))
-
-                rowindex += 1
-
-            self.model.conn.commit()

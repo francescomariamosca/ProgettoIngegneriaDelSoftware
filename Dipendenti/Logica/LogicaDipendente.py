@@ -5,7 +5,7 @@ from PyQt5 import QtWidgets
 from Dipendenti.View.DipendentiView import DipendentiView
 
 
-class ControllerDipendente(QMainWindow):
+class LogicaDipendente(QMainWindow):
     def __init__(self, home):
         super(QMainWindow, self).__init__()
         self.home = home
@@ -22,6 +22,7 @@ class ControllerDipendente(QMainWindow):
 
         self.window = QtWidgets.QMainWindow()
         self.dipendenteView.homeDipendenti.setupUi(self.window)
+        self.loadTableDipendenti()
         self.window.show()
         print("fatto")
 
@@ -117,8 +118,6 @@ class ControllerDipendente(QMainWindow):
             self.dipendenteView.messageWarningInserimento()
 
     def eliminaDipendente(self):
-
-        #updateSicurezza = "DELETE FROM Sicurezza where nome_dipendente = '%s'" % (''.join(self.dipendenteView.eliminaDip.ricercacf.text()))
         cf = self.dipendenteView.getEliminaLineEdit()
         result = self.tableDipendenti.deleteQuery(cf)
         if result != 0:
@@ -170,3 +169,27 @@ class ControllerDipendente(QMainWindow):
         self.tableDipendenti.modifyQuery(params)
         self.dipendenteView.messageCorrettoModify()
         self.passaDipendenti()
+
+    def loadTableDipendenti(self):
+        queryResult = self.tableDipendenti.loadData()
+        rowindex = 0
+        self.dipendenteView.homeDipendenti.tabelladip.setRowCount(30)
+
+
+        for row in queryResult:
+            self.dipendenteView.homeDipendenti.tabelladip.setItem(rowindex, 0, QtWidgets.QTableWidgetItem(row[0]))
+            self.dipendenteView.homeDipendenti.tabelladip.setItem(rowindex, 1, QtWidgets.QTableWidgetItem(row[1]))
+            self.dipendenteView.homeDipendenti.tabelladip.setItem(rowindex, 2, QtWidgets.QTableWidgetItem(row[2]))
+            self.dipendenteView.homeDipendenti.tabelladip.setItem(rowindex, 3, QtWidgets.QTableWidgetItem(row[3]))
+            self.dipendenteView.homeDipendenti.tabelladip.setItem(rowindex, 4, QtWidgets.QTableWidgetItem(row[4]))
+            self.dipendenteView.homeDipendenti.tabelladip.setItem(rowindex, 5, QtWidgets.QTableWidgetItem(row[5]))
+            ore_sett = row[6]
+            converted_ore = str(ore_sett)
+            self.dipendenteView.homeDipendenti.tabelladip.setItem(rowindex, 6, QtWidgets.QTableWidgetItem(converted_ore))
+            stip = row[7]
+            converted_stip = str(stip)
+            euro = "€"
+            self.dipendenteView.homeDipendenti.tabelladip.setItem(rowindex, 7, QtWidgets.QTableWidgetItem(converted_stip + " " + euro))
+            self.dipendenteView.homeDipendenti.tabelladip.setItem(rowindex, 8, QtWidgets.QTableWidgetItem(row[8]))
+
+            rowindex += 1

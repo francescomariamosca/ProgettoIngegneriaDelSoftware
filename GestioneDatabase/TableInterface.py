@@ -33,3 +33,7 @@ class TableInterface(ABC):
     @abstractmethod
     def searchQuery(self, params: dict):
         pass
+
+    @abstractmethod
+    def loadData(self):
+        pass

@@ -10,12 +10,9 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from GestioneDatabase.QueryGestioneDipendenti.TableDipendenti import TableDipendenti
-
 
 class HomeGestioneDipUI(object):
     def setupUi(self, MainWindow):
-        self.tableDip = TableDipendenti()
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1907, 1202)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -195,7 +192,6 @@ class HomeGestioneDipUI(object):
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-        self.loadData()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -232,35 +228,5 @@ class HomeGestioneDipUI(object):
         self.tabelladip.setColumnWidth(6, 150)
         self.tabelladip.setColumnWidth(7, 240)
         self.tabelladip.setColumnWidth(8, 200)
-
-
-
-
-    def loadData(self):
-        subquery = "SELECT * FROM Dipendenti"
-        rowindex = 0
-
-        self.tabelladip.setRowCount(30)
-
-        for row in self.tableDip.c.execute(subquery):
-            self.tabelladip.setItem(rowindex, 0, QtWidgets.QTableWidgetItem(row[0]))
-            self.tabelladip.setItem(rowindex, 1, QtWidgets.QTableWidgetItem(row[1]))
-            self.tabelladip.setItem(rowindex, 2, QtWidgets.QTableWidgetItem(row[2]))
-            self.tabelladip.setItem(rowindex, 3, QtWidgets.QTableWidgetItem(row[3]))
-            self.tabelladip.setItem(rowindex, 4, QtWidgets.QTableWidgetItem(row[4]))
-            self.tabelladip.setItem(rowindex, 5, QtWidgets.QTableWidgetItem(row[5]))
-            ore_sett = row[6]
-            converted_ore = str(ore_sett)
-            self.tabelladip.setItem(rowindex, 6, QtWidgets.QTableWidgetItem(converted_ore))
-            stip = row[7]
-            converted_stip = str(stip)
-            euro = "€"
-            self.tabelladip.setItem(rowindex, 7, QtWidgets.QTableWidgetItem(converted_stip + " " +euro))
-            self.tabelladip.setItem(rowindex, 8, QtWidgets.QTableWidgetItem(row[8]))
-
-            rowindex += 1
-
-        self.tableDip.conn.commit()
-
 
 

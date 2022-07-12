@@ -10,12 +10,8 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from GestioneDatabase.QueryGestioneFornitori.TableFornitori import TableFornitori
-
-
 class HomeFornitoriUI(object):
     def setupUi(self, MainWindow):
-        self.tableForn = TableFornitori()
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1800, 590)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -202,7 +198,6 @@ class HomeFornitoriUI(object):
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-        self.loadData()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -233,25 +228,6 @@ class HomeFornitoriUI(object):
         self.tabfornitori.setColumnWidth(4,250)
         self.tabfornitori.setColumnWidth(5,250)
         self.tabfornitori.setColumnWidth(6,300)
-
-    def loadData(self):
-        subquery = "SELECT * FROM Fornitori"
-        rowindex=0
-        self.tabfornitori.setRowCount(50)
-        for row in self.tableForn.c.execute(subquery):
-            id = row[0]
-            converted_id = str(id)
-            self.tabfornitori.setItem(rowindex, 0, QtWidgets.QTableWidgetItem(converted_id))
-            self.tabfornitori.setItem(rowindex, 1, QtWidgets.QTableWidgetItem(row[1]))
-            self.tabfornitori.setItem(rowindex, 2, QtWidgets.QTableWidgetItem(row[2]))
-            self.tabfornitori.setItem(rowindex, 3, QtWidgets.QTableWidgetItem(row[3]))
-            self.tabfornitori.setItem(rowindex, 4, QtWidgets.QTableWidgetItem(row[4]))
-            self.tabfornitori.setItem(rowindex, 5, QtWidgets.QTableWidgetItem(row[5]))
-            self.tabfornitori.setItem(rowindex, 6, QtWidgets.QTableWidgetItem(row[6]))
-
-            rowindex += 1
-
-        self.tableForn.conn.commit()
 
 
 

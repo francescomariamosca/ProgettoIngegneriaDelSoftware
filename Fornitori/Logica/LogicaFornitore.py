@@ -18,6 +18,7 @@ class ControllerFornitori(QMainWindow):
 
         self.window = QtWidgets.QMainWindow()
         self.fornitoreView.homeFornitori.setupUi(self.window)
+        self.loadTableFornitori()
         self.window.show()
 
         # funzione per tornare alla home
@@ -145,3 +146,20 @@ class ControllerFornitori(QMainWindow):
         self.fornitoreView.messageCorrettaModifica()
         self.passaFornitori()
 
+    def loadTableFornitori(self):
+        queryResult = self.tableFornitore.loadData()
+        rowindex = 0
+        self.fornitoreView.homeFornitori.tabfornitori.setRowCount(50)
+
+        for row in queryResult:
+            id = row[0]
+            converted_id = str(id)
+            self.fornitoreView.homeFornitori.tabfornitori.setItem(rowindex, 0, QtWidgets.QTableWidgetItem(converted_id))
+            self.fornitoreView.homeFornitori.tabfornitori.setItem(rowindex, 1, QtWidgets.QTableWidgetItem(row[1]))
+            self.fornitoreView.homeFornitori.tabfornitori.setItem(rowindex, 2, QtWidgets.QTableWidgetItem(row[2]))
+            self.fornitoreView.homeFornitori.tabfornitori.setItem(rowindex, 3, QtWidgets.QTableWidgetItem(row[3]))
+            self.fornitoreView.homeFornitori.tabfornitori.setItem(rowindex, 4, QtWidgets.QTableWidgetItem(row[4]))
+            self.fornitoreView.homeFornitori.tabfornitori.setItem(rowindex, 5, QtWidgets.QTableWidgetItem(row[5]))
+            self.fornitoreView.homeFornitori.tabfornitori.setItem(rowindex, 6, QtWidgets.QTableWidgetItem(row[6]))
+
+            rowindex += 1

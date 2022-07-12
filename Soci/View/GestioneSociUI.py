@@ -10,13 +10,8 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from GestioneDatabase.QueryGestioneSoci.TableSoci import TableSoci
-
-
 class GestioneSociUI(object):
     def setupUi(self, MainWindow):
-        self.tableSocio = TableSoci()
-
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1500, 750)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -201,7 +196,6 @@ class GestioneSociUI(object):
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-        self.loadData()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -232,27 +226,3 @@ class GestioneSociUI(object):
         self.tabellasoci.setColumnWidth(4, 200)
         self.tabellasoci.setColumnWidth(5, 200)
         self.tabellasoci.setColumnWidth(6, 200)
-
-
-
-    def loadData(self):
-        subquery = "SELECT * FROM Soci ORDER BY id_socio"
-        rowindex = 0
-
-        self.tabellasoci.setRowCount(60)
-
-        for row in self.tableSocio.c.execute(subquery):
-            id_cliente = row[0]
-            converted_id = str(id_cliente)
-            self.tabellasoci.setItem(rowindex, 0, QtWidgets.QTableWidgetItem(converted_id))
-            self.tabellasoci.setItem(rowindex, 1, QtWidgets.QTableWidgetItem(row[1]))
-            self.tabellasoci.setItem(rowindex, 2, QtWidgets.QTableWidgetItem(row[2]))
-            self.tabellasoci.setItem(rowindex, 3, QtWidgets.QTableWidgetItem(row[3]))
-            self.tabellasoci.setItem(rowindex, 4, QtWidgets.QTableWidgetItem(row[4]))
-            self.tabellasoci.setItem(rowindex, 5, QtWidgets.QTableWidgetItem(row[5]))
-            date = row[6]
-            converted_date = str(date)
-            self.tabellasoci.setItem(rowindex, 6, QtWidgets.QTableWidgetItem(converted_date))
-            rowindex += 1
-
-        self.tableSocio.conn.commit()

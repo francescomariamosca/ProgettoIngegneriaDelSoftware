@@ -30,10 +30,6 @@ class TableSicurezza(TableInterface):
         else:
             return 0
 
-
-
-
-
     def deleteQuery(self, a):
         deleteQuery = "DELETE FROM sicurezza where nome_utente = '%s'" % (''.join(a))
         result = self.checkQuery(a)
@@ -91,4 +87,8 @@ class TableSicurezza(TableInterface):
         print(result)
         return result
 
-
+    def loadData(self):
+        query = "SELECT nome_dipendente, nome_utente FROM sicurezza"
+        allUsers = self.c.execute(query)
+        self.conn.commit()
+        return allUsers

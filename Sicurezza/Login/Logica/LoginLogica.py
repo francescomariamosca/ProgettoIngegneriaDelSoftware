@@ -13,13 +13,10 @@ class LoginLogica():
     def CheckLogin(self):
         username, password = self.loginView.getLoginLineEdit()
         params = {'nome_utente': username, 'pass': password}
-        result = self.tableSicurezza.modifyQuery(params)
+        result = self.tableSicurezza.searchQuery(params)
 
         if result == 0:
             self.loginView.WarningMessage()
-            print("male")
         else:
             self.loginView.window.close()
             self.home.mostra()
-            #self.loginView.warn = QMessageBox.warning(self, "Login", "Username e/o password errati!")
-            print("bene")

@@ -20,6 +20,7 @@ class ControllerUtente(QMainWindow):
         #inizializzazione interfaccia GestioneUtenti
         self.window = QtWidgets.QMainWindow()
         self.utenteView.homeUtente.setupUi(self.window)
+        self.loadTableUsers()
         self.window.show()
 
         #funzioni per tornare alla home
@@ -118,3 +119,12 @@ class ControllerUtente(QMainWindow):
         else:
             self.utenteView.warnInserimento()
 
+    def loadTableUsers(self):
+        queryResult = self.tableUtente.loadData()
+        rowindex = 0
+        self.utenteView.homeUtente.tabellaUtente.setRowCount(20)
+
+        for row in queryResult:
+            self.utenteView.homeUtente.tabellaUtente.setItem(rowindex, 0, QtWidgets.QTableWidgetItem(row[0]))
+            self.utenteView.homeUtente.tabellaUtente.setItem(rowindex, 1, QtWidgets.QTableWidgetItem(row[1]))
+            rowindex += 1

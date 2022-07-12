@@ -69,3 +69,21 @@ class TableSoci(TableInterface):
             data_abbonamento = data[6]
             return id_socio, e_mail, CF, nome_cliente, cognome_cliente, telefono, data_abbonamento
 
+    def loadData(self):
+        query = "SELECT * FROM Soci"
+        allSoci = self.c.execute(query)
+        self.conn.commit()
+        #number = allSoci.fetchall()
+        return allSoci #number
+
+    def countSoci(self):
+        countQuery = "SELECT COUNT(CF) FROM Soci"
+        number = self.c.execute(countQuery)
+        number.fetchone()[0]
+        return number
+
+    def loadDataCampi(self):
+        query = "SELECT id_socio, nome_cliente, cognome_cliente FROM Soci"
+        allSoci = self.c.execute(query)
+        self.conn.commit()
+        return allSoci
