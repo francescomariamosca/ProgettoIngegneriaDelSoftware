@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'LiqFinale.ui'
+# Form implementation generated from reading ui file 'LiquiditàUrlodelSium.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -10,18 +10,15 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from GestioneDatabase.QueryGestioneSoci.TableSoci import TableSoci
-
 
 class LiquiditaHomeUI(object):
     def setupUi(self, MainWindow):
-        self.modelSoci = TableSoci()
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1913, 676)
+        MainWindow.resize(1236, 588)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
-        self.gridLayout.setObjectName("gridLayout")
+        self.gridLayout_2 = QtWidgets.QGridLayout(self.centralwidget)
+        self.gridLayout_2.setObjectName("gridLayout_2")
         self.label_8 = QtWidgets.QLabel(self.centralwidget)
         font = QtGui.QFont()
         font.setFamily("Yu Gothic UI")
@@ -30,9 +27,11 @@ class LiquiditaHomeUI(object):
         font.setWeight(75)
         self.label_8.setFont(font)
         self.label_8.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.label_8.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_8.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.label_8.setObjectName("label_8")
-        self.gridLayout.addWidget(self.label_8, 0, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.label_8, 0, 0, 1, 1)
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.tabliquidita = QtWidgets.QTableWidget(self.centralwidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -76,6 +75,8 @@ class LiquiditaHomeUI(object):
         font = QtGui.QFont()
         font.setFamily("Yu Gothic UI Semibold")
         font.setPointSize(14)
+        font.setBold(True)
+        font.setWeight(75)
         item.setFont(font)
         self.tabliquidita.setHorizontalHeaderItem(2, item)
         item = QtWidgets.QTableWidgetItem()
@@ -98,7 +99,7 @@ class LiquiditaHomeUI(object):
         font.setWeight(75)
         item.setFont(font)
         self.tabliquidita.setHorizontalHeaderItem(5, item)
-        self.gridLayout.addWidget(self.tabliquidita, 1, 0, 1, 2)
+        self.horizontalLayout_2.addWidget(self.tabliquidita)
         self.tabsoci = QtWidgets.QTableWidget(self.centralwidget)
         font = QtGui.QFont()
         font.setFamily("Yu Gothic UI Semibold")
@@ -123,12 +124,12 @@ class LiquiditaHomeUI(object):
         item = QtWidgets.QTableWidgetItem()
         font = QtGui.QFont()
         font.setFamily("Yu Gothic UI Semibold")
-        font.setPointSize(14)
+        font.setPointSize(12)
         font.setBold(True)
         font.setWeight(75)
         item.setFont(font)
         self.tabsoci.setHorizontalHeaderItem(1, item)
-        self.gridLayout.addWidget(self.tabsoci, 1, 2, 1, 1)
+        self.horizontalLayout_2.addWidget(self.tabsoci)
         self.tabfornitori = QtWidgets.QTableWidget(self.centralwidget)
         font = QtGui.QFont()
         font.setFamily("Yu Gothic UI Semibold")
@@ -153,12 +154,140 @@ class LiquiditaHomeUI(object):
         item = QtWidgets.QTableWidgetItem()
         font = QtGui.QFont()
         font.setFamily("Yu Gothic UI Semibold")
-        font.setPointSize(14)
+        font.setPointSize(12)
         font.setBold(True)
         font.setWeight(75)
         item.setFont(font)
         self.tabfornitori.setHorizontalHeaderItem(1, item)
-        self.gridLayout.addWidget(self.tabfornitori, 1, 3, 1, 1)
+        self.horizontalLayout_2.addWidget(self.tabfornitori)
+        self.gridLayout_2.addLayout(self.horizontalLayout_2, 1, 0, 1, 3)
+        self.gridLayout = QtWidgets.QGridLayout()
+        self.gridLayout.setObjectName("gridLayout")
+        self.label_4 = QtWidgets.QLabel(self.centralwidget)
+        font = QtGui.QFont()
+        font.setFamily("Yu Gothic UI Semibold")
+        font.setPointSize(11)
+        self.label_4.setFont(font)
+        self.label_4.setObjectName("label_4")
+        self.gridLayout.addWidget(self.label_4, 3, 1, 1, 1)
+        self.label_10 = QtWidgets.QLabel(self.centralwidget)
+        font = QtGui.QFont()
+        font.setFamily("Yu Gothic UI Semibold")
+        font.setPointSize(11)
+        self.label_10.setFont(font)
+        self.label_10.setObjectName("label_10")
+        self.gridLayout.addWidget(self.label_10, 3, 0, 1, 1)
+        self.label_5 = QtWidgets.QLabel(self.centralwidget)
+        font = QtGui.QFont()
+        font.setFamily("Yu Gothic UI Semibold")
+        font.setPointSize(11)
+        self.label_5.setFont(font)
+        self.label_5.setObjectName("label_5")
+        self.gridLayout.addWidget(self.label_5, 0, 2, 1, 1)
+        self.note = QtWidgets.QLineEdit(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.note.sizePolicy().hasHeightForWidth())
+        self.note.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setFamily("Yu Gothic UI Semibold")
+        font.setPointSize(10)
+        self.note.setFont(font)
+        self.note.setStyleSheet("border-radius: 10px;\n"
+"background-color: rgb(221, 214, 73);\n"
+"border: 3px solid white;")
+        self.note.setText("")
+        self.note.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        self.note.setObjectName("note")
+        self.gridLayout.addWidget(self.note, 2, 2, 3, 1)
+        self.label_9 = QtWidgets.QLabel(self.centralwidget)
+        font = QtGui.QFont()
+        font.setFamily("Yu Gothic UI Semibold")
+        font.setPointSize(11)
+        self.label_9.setFont(font)
+        self.label_9.setObjectName("label_9")
+        self.gridLayout.addWidget(self.label_9, 0, 0, 1, 1)
+        self.idsocio = QtWidgets.QLineEdit(self.centralwidget)
+        font = QtGui.QFont()
+        font.setFamily("Yu Gothic UI Semibold")
+        font.setPointSize(10)
+        self.idsocio.setFont(font)
+        self.idsocio.setStyleSheet("border-radius: 20px;\n"
+"background-color: rgb(221, 214, 73);\n"
+"border: 3px solid white;")
+        self.idsocio.setText("")
+        self.idsocio.setObjectName("idsocio")
+        self.gridLayout.addWidget(self.idsocio, 4, 1, 1, 1)
+        self.idfornitore = QtWidgets.QLineEdit(self.centralwidget)
+        font = QtGui.QFont()
+        font.setFamily("Yu Gothic UI Semibold")
+        font.setPointSize(10)
+        self.idfornitore.setFont(font)
+        self.idfornitore.setStyleSheet("border-radius: 20px;\n"
+"background-color: rgb(221, 214, 73);\n"
+"border: 3px solid white;")
+        self.idfornitore.setText("")
+        self.idfornitore.setObjectName("idfornitore")
+        self.gridLayout.addWidget(self.idfornitore, 6, 0, 1, 1)
+        self.label_2 = QtWidgets.QLabel(self.centralwidget)
+        font = QtGui.QFont()
+        font.setFamily("Yu Gothic UI Semibold")
+        font.setPointSize(11)
+        self.label_2.setFont(font)
+        self.label_2.setObjectName("label_2")
+        self.gridLayout.addWidget(self.label_2, 0, 1, 1, 1)
+        self.label_11 = QtWidgets.QLabel(self.centralwidget)
+        font = QtGui.QFont()
+        font.setFamily("Yu Gothic UI Semibold")
+        font.setPointSize(11)
+        self.label_11.setFont(font)
+        self.label_11.setObjectName("label_11")
+        self.gridLayout.addWidget(self.label_11, 5, 0, 1, 1)
+        self.categorie = QtWidgets.QComboBox(self.centralwidget)
+        font = QtGui.QFont()
+        font.setFamily("Yu Gothic UI Semibold")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.categorie.setFont(font)
+        self.categorie.setStyleSheet("border-radius: 20px;\n"
+"background-color: rgb(221, 214, 73);\n"
+"border: 3px solid white;")
+        self.categorie.setObjectName("categorie")
+        self.categorie.addItem("")
+        self.categorie.addItem("")
+        self.categorie.addItem("")
+        self.categorie.addItem("")
+        self.categorie.addItem("")
+        self.gridLayout.addWidget(self.categorie, 2, 0, 1, 1)
+        self.tipologia = QtWidgets.QComboBox(self.centralwidget)
+        font = QtGui.QFont()
+        font.setFamily("Yu Gothic UI Semibold")
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.tipologia.setFont(font)
+        self.tipologia.setStyleSheet("border-radius: 20px;\n"
+"background-color: rgb(221, 214, 73);\n"
+"border: 3px solid white;")
+        self.tipologia.setObjectName("tipologia")
+        self.tipologia.addItem("")
+        self.tipologia.addItem("")
+        self.gridLayout.addWidget(self.tipologia, 4, 0, 1, 1)
+        self.importo = QtWidgets.QLineEdit(self.centralwidget)
+        font = QtGui.QFont()
+        font.setFamily("Yu Gothic UI Semibold")
+        font.setPointSize(11)
+        font.setBold(True)
+        font.setWeight(75)
+        self.importo.setFont(font)
+        self.importo.setStyleSheet("border-radius: 20px;\n"
+"background-color: rgb(221, 214, 73);\n"
+"border: 3px solid white;")
+        self.importo.setObjectName("importo")
+        self.gridLayout.addWidget(self.importo, 2, 1, 1, 1)
+        self.gridLayout_2.addLayout(self.gridLayout, 2, 0, 1, 3)
         self.tornahome = QtWidgets.QCommandLinkButton(self.centralwidget)
         font = QtGui.QFont()
         font.setFamily("Segoe UI")
@@ -169,9 +298,9 @@ class LiquiditaHomeUI(object):
         icon = QtGui.QIcon.fromTheme("null")
         self.tornahome.setIcon(icon)
         self.tornahome.setObjectName("tornahome")
-        self.gridLayout.addWidget(self.tornahome, 2, 0, 1, 1)
-        self.horizontalLayout = QtWidgets.QHBoxLayout()
-        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.gridLayout_2.addWidget(self.tornahome, 3, 1, 1, 1)
+        self.verticalLayout = QtWidgets.QVBoxLayout()
+        self.verticalLayout.setObjectName("verticalLayout")
         self.insentrata = QtWidgets.QPushButton(self.centralwidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -193,58 +322,12 @@ class LiquiditaHomeUI(object):
 "}\n"
 "")
         self.insentrata.setObjectName("insentrata")
-        self.horizontalLayout.addWidget(self.insentrata)
-        self.insuscita = QtWidgets.QPushButton(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.insuscita.sizePolicy().hasHeightForWidth())
-        self.insuscita.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setFamily("Yu Gothic UI Semibold")
-        font.setPointSize(11)
-        self.insuscita.setFont(font)
-        self.insuscita.setStyleSheet("QPushButton{\n"
-"border-radius: 20px;\n"
-"background-color: rgb(221, 214, 73);\n"
-"border: 3px solid white;\n"
-"}\n"
-"\n"
-"QPushButton:pressed{\n"
-"    background-color: rgb(255, 255, 155);\n"
-"}\n"
-"")
-        self.insuscita.setObjectName("insuscita")
-        self.horizontalLayout.addWidget(self.insuscita)
-        self.statistiche = QtWidgets.QPushButton(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.statistiche.sizePolicy().hasHeightForWidth())
-        self.statistiche.setSizePolicy(sizePolicy)
-        font = QtGui.QFont()
-        font.setFamily("Yu Gothic UI Semibold")
-        font.setPointSize(11)
-        self.statistiche.setFont(font)
-        self.statistiche.setStyleSheet("QPushButton{\n"
-"border-radius: 20px;\n"
-"background-color: rgb(221, 214, 73);\n"
-"border: 3px solid white;\n"
-"}\n"
-"\n"
-"QPushButton:pressed{\n"
-"    background-color: rgb(255, 255, 155);\n"
-"}\n"
-"")
-        self.statistiche.setObjectName("statistiche")
-        self.horizontalLayout.addWidget(self.statistiche)
-        self.gridLayout.addLayout(self.horizontalLayout, 2, 1, 1, 3)
+        self.verticalLayout.addWidget(self.insentrata)
+        self.gridLayout_2.addLayout(self.verticalLayout, 3, 2, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-        self.loadSoci()
-        self.loadFornitori()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -255,7 +338,7 @@ class LiquiditaHomeUI(object):
         item = self.tabliquidita.horizontalHeaderItem(1)
         item.setText(_translate("MainWindow", "€"))
         item = self.tabliquidita.horizontalHeaderItem(2)
-        item.setText(_translate("MainWindow", "New Column"))
+        item.setText(_translate("MainWindow", "Tipologia"))
         item = self.tabliquidita.horizontalHeaderItem(3)
         item.setText(_translate("MainWindow", "ID Socio"))
         item = self.tabliquidita.horizontalHeaderItem(4)
@@ -270,44 +353,29 @@ class LiquiditaHomeUI(object):
         item.setText(_translate("MainWindow", "ID Fornitore"))
         item = self.tabfornitori.horizontalHeaderItem(1)
         item.setText(_translate("MainWindow", "Nome Fornitore"))
+        self.label_4.setText(_translate("MainWindow", "ID Socio"))
+        self.label_10.setText(_translate("MainWindow", "Tipologia"))
+        self.label_5.setText(_translate("MainWindow", "Note:"))
+        self.label_9.setText(_translate("MainWindow", "Categoria"))
+        self.label_2.setText(_translate("MainWindow", "Importo (+ per le entrate, - per le uscite)"))
+        self.label_11.setText(_translate("MainWindow", "ID Fornitore"))
+        self.categorie.setItemText(0, _translate("MainWindow", "Quota Sociale"))
+        self.categorie.setItemText(1, _translate("MainWindow", "Utenze"))
+        self.categorie.setItemText(2, _translate("MainWindow", "Sponsorizzazioni"))
+        self.categorie.setItemText(3, _translate("MainWindow", "Stipendi"))
+        self.categorie.setItemText(4, _translate("MainWindow", "Pagamento Fornitori"))
+        self.tipologia.setItemText(0, _translate("MainWindow", "ENTRATA"))
+        self.tipologia.setItemText(1, _translate("MainWindow", "USCITA"))
+        self.importo.setText(_translate("MainWindow", "+700"))
         self.tornahome.setText(_translate("MainWindow", "Torna alla Home"))
-        self.insentrata.setText(_translate("MainWindow", "Inserisci Entrata "))
-        self.insuscita.setText(_translate("MainWindow", "Inserisci Uscita "))
-        self.statistiche.setText(_translate("MainWindow", "Statistiche"))
-
-        self.tabliquidita.setColumnWidth(2, 210)
-        self.tabliquidita.setColumnWidth(4, 180)
-        self.tabliquidita.setColumnWidth(5, 350)
-        self.tabfornitori.setColumnWidth(0, 150)
-        self.tabfornitori.setColumnWidth(1, 250)
-        self.tabsoci.setColumnWidth(0, 130)
-        self.tabsoci.setColumnWidth(1, 270)
-
-    def loadFornitori(self):
-        query = "SELECT id_fornitore, nome_azienda FROM Fornitori"
-        rowindex = 0
-
-        self.tabfornitori.setRowCount(80)
-
-        for row in self.modelSoci.c.execute(query):
-            id = row[0]
-            conv_id = str(id)
-            self.tabfornitori.setItem(rowindex, 0, QtWidgets.QTableWidgetItem(conv_id))
-            self.tabfornitori.setItem(rowindex, 1, QtWidgets.QTableWidgetItem(row[1]))
-            rowindex += 1
-
-    def loadSoci(self):
-        query = "SELECT id_socio, nome_cliente, cognome_cliente FROM Soci "
-
-        rowindex = 0
-        self.tabsoci.setRowCount(80)
-
-        for row in self.modelSoci.c.execute(query):
-            id_socio = row[0]
-            conv_id = str(id_socio)
-            self.tabsoci.setItem(rowindex, 0, QtWidgets.QTableWidgetItem(conv_id))
-            self.tabsoci.setItem(rowindex, 1, QtWidgets.QTableWidgetItem(row[1] + " " + row[2]))
-            rowindex += 1
+        self.insentrata.setText(_translate("MainWindow", "Inserisci nella Liquidità"))
 
 
-
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())

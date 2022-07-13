@@ -418,5 +418,5 @@ class LogicaCampi(QMainWindow):
             id = row[0]
             converted_id = str(id)
             self.viewCampi.vistaCampi.tabellasocicampi.setItem(rowindex, 0, QtWidgets.QTableWidgetItem(converted_id))
-            self.viewCampi.vistaCampi.tabellasocicampi.setItem(rowindex, 1, QtWidgets.QTableWidgetItem(row[1] + " " + row[2]))
+            self.viewCampi.vistaCampi.tabellasocicampi.setItem(rowindex, 1, QtWidgets.QTableWidgetItem(row[3] + " " + row[4]))
             rowindex += 1
