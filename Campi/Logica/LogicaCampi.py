@@ -101,9 +101,9 @@ class LogicaCampi(QMainWindow):
 
     def eliminaPrenotazione(self):
         self.campo, self.ora = self.viewCampi.getTable()
+        self.invioMailCancellazione()
         result = self.tableCampi.deleteQuery(self.campo, self.ora, self.datePy)
         print(result)
-        self.invioMailCancellazione()
         self.viewCampi.correttaCancellazione()
 
     def controllaDisponibilita(self):

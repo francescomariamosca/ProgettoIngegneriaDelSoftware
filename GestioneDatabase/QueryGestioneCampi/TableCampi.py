@@ -30,7 +30,7 @@ class TableCampi(TableInterface):
         pass
 
     def deleteQuery(self, campo, ora, data):
-        deleteQuery = "DELETE  FROM Campi where tipo_campo = '%s' and orario_prenotazione and data_prenotazione = '%s'= '%s' " % (''.join(campo),
+        deleteQuery = "DELETE  FROM Campi where tipo_campo = '%s' and orario_prenotazione = '%s' and data_prenotazione = '%s' " % (''.join(campo),
                                                                                                                                     ''.join(ora),
                                                                                                                                   ''.join(data))
 
@@ -78,10 +78,9 @@ class TableCampi(TableInterface):
         return result1, result2, result3, result4
 
     def deleteReservationMail(self, ora, campo, data):
-        query1 = "SELECT Soci.e_mail, Soci.nome_cliente, Soci.cognome_cliente FROM Soci, Campi WHERE Soci.id_socio = Campi.id_giocatore1  and Campi.orario_prenotazione='%s'and Campi.tipo_campo = '%s' and Campi.data_prenotazione = '%s'" % (
-                                    ''.join(ora),
-                                    ''.join(campo),
-                                    ''.join(data))
+        query1 = "SELECT Soci.e_mail, Soci.nome_cliente, Soci.cognome_cliente FROM Soci, Campi WHERE Soci.id_socio = Campi.id_giocatore1  and Campi.orario_prenotazione='%s'and Campi.tipo_campo = '%s' and Campi.data_prenotazione = '%s'" % (''.join(ora),
+                                                                                                                                                                                                                                               ''.join(campo),
+                                                                                                                                                                                                                                               ''.join(data))
 
         query2 = "SELECT Soci.e_mail, Soci.nome_cliente, Soci.cognome_cliente FROM Soci, Campi WHERE Soci.id_socio = Campi.id_giocatore1  and Campi.orario_prenotazione='%s'and Campi.tipo_campo = '%s' and Campi.data_prenotazione = '%s'" % (
             ''.join(ora),
