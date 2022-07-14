@@ -11,16 +11,14 @@ class LiquiditaView(QMainWindow):
     def getInserisciLineEdit(self):
 
         idSocio = self.homeLidquidita.idsocio.text()
-        if idSocio != "":
-            if idSocio.isdigit() is False :
-                return 0
+        if idSocio.isdigit() is False and idSocio != "":
+            return 0
 
         idFornitore = self.homeLidquidita.idfornitore.text()
-        if idFornitore != "":
-            if idFornitore.isdigit() is False:
-                return 0
+        if idFornitore.isdigit() is False and idFornitore != "":
+            return 0
 
-        idLiquidita = self.homeLidquidita.note.text()
+        idLiquidita = self.homeLidquidita.id_transazione.text()
         if idLiquidita.isdigit() is False :
             return 0
 
@@ -34,6 +32,12 @@ class LiquiditaView(QMainWindow):
 
         return idSocio, idFornitore, idLiquidita, costo, categoria, tipologia
 
+    def getDeleteLineEdit(self):
+        idLiquidita = self.homeLidquidita.id_transazione.text()
+        if idLiquidita.isdigit() is False:
+            return 0
+        else:
+            return idLiquidita
 
     def enableFields(self):
         print("dentro")
@@ -53,6 +57,8 @@ class LiquiditaView(QMainWindow):
     def warningMessageType(self):
         self.message = QMessageBox.warning(self, "ATTENZIONE! ", " Alcuni campi devono essere numerici!")
 
+    def warningElimina(self):
+        self.message = QMessageBox.warning(self, "ATTENZIONE! ", " Nessuna transazione corrisponde a quella inserita")
 
     def warningMessageExisting(self):
-        self.message = QMessageBox.warning(self, "ATTENZIONE! ", " L'id del socio o del fornitore inserito non corrispondono ad alcun socio o fornitore!")
+        self.message = QMessageBox.warning(self, "ATTENZIONE! ", " L'id del socio o del fornitore inserito non corrispondono ad alcun socio o fornitore, oppure l'Id della trnasazione appartiene già ad un'altra transazione!")

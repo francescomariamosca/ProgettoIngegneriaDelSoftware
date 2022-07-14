@@ -18,8 +18,16 @@ class TableLiquidita(TableInterface):
         )
         result = self.checkQuery(socio, fornitore, flag)
         if result == 1:
-            self.c.execute(query)
-            self.conn.commit()
+            checkQuery = "SELECT * FROM Liquidita where id_transazione = '%s' " % (''.join(id))
+            self.c.execute(checkQuery)
+            result = self.c.fetchone()
+            print(result)
+            if result != None:
+                return 0
+            else:
+                print("dentro")
+                self.c.execute(query)
+                self.conn.commit()
         else:
             return 0
 
@@ -27,22 +35,40 @@ class TableLiquidita(TableInterface):
         tableSoci = TableSoci()
         tableFornitori = TableFornitori()
         if flag is True:
-            resultSoci = tableSoci.checkQuery(a)
-            if resultSoci == None:
-                return 0
-            else:
+            if a == "":
                 return 1
+            else:
+                resultSoci = tableSoci.checkQuery(a)
+                if resultSoci == None:
+                    return 0
+                else:
+                    return 1
 
         if flag is False:
-            resultFornitori = tableFornitori.checkQuery(b)
-            if resultFornitori == None:
-                return 0
-            else:
+            if b == "":
                 return 1
+            else:
+                resultFornitori = tableFornitori.checkQuery(b)
+                if resultFornitori == None:
+                    return 0
+                else:
+                    return 1
 
 
-    def deleteQuery(self, params: dict):
-        pass
+    def deleteQuery(self, a):
+        query = "DELETE FROM Liquidita WHERE id_transazione = '%s' " % (''.join(a))
+        checkQuery = "SELECT * FROM Liquidita where id_transazione = '%s' " % (''.join(a))
+        self.c.execute(checkQuery)
+        result = self.c.fetchone()
+        print(result)
+        if result == None:
+            return 0
+        else:
+            print("dentro")
+            self.c.execute(query)
+            self.conn.commit()
+
+
 
     def modifyQuery(self, params: dict):
         pass

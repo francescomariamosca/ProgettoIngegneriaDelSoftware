@@ -37,6 +37,7 @@ class LogicaLiquidita(QMainWindow):
 
         #funzioni per attivare l'inserimento di una entrata o uscita
         self.liquditaView.homeLidquidita.insentrata.clicked.connect(self.inserisciEntrata)
+        self.liquditaView.homeLidquidita.eliminaEntrata.clicked.connect(self.eliminaEntrata)
 
         #funzioni per tornare alla home
         self.liquditaView.homeLidquidita.tornahome.clicked.connect(self.window.close)
@@ -58,8 +59,26 @@ class LogicaLiquidita(QMainWindow):
             if insertQuery == 0:
                 self.liquditaView.warningMessageExisting()
             else:
-                self.liquditaView.homeLidquidita.insentrata.clicked.connect(self.window.close)
-                self.liquditaView.homeLidquidita.insentrata.clicked.connect(self.passaLiquidita)
+                print("enrico omosessuale")
+                self.window.close()
+                self.passaLiquidita()
+
+    def eliminaEntrata(self):
+        print("dentro")
+        if (self.liquditaView.getDeleteLineEdit() == 0):
+            self.liquditaView.warningElimina()
+
+        else:
+            id = self.liquditaView.getDeleteLineEdit()
+            print(id)
+            result = self.tableLiquidita.deleteQuery(id)
+            print(result)
+            if result == 0:
+                self.liquditaView.warningElimina()
+            else:
+                print("concetti&Piergallini&Balloni omosessuale")
+                self.window.close()
+                self.passaLiquidita()
 
     def loadDataSoci(self):
         result = self.tableSoci.loadData()
