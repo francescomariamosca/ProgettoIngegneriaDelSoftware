@@ -11,16 +11,21 @@ import smtplib
 from Utility.email import email
 
 
+# noinspection PyMissingConstructor
 class LogicaSocio(QMainWindow):
     def __init__(self, home):
-        super(QMainWindow, self).__init__()
         self.home = home
-        self.socioView = SociView()
+        self.socioView = None
+        self.init_view()
         self.tableSocio = TableSoci()
         self.resultSearch = None
         self.mail = email()
         self.listAbbonamento = []
         self.called = True
+
+    def init_view(self):
+        super(QMainWindow, self).__init__()
+        self.socioView = SociView()
 
     def passaSoci(self):
         #from Home.View.Home import Home
@@ -170,13 +175,15 @@ class LogicaSocio(QMainWindow):
         params = {'id_socio': id_socio, 'e_mail': e_mail, 'CF': CF, 'nome_cliente': nome_cliente,
                   'cognome_cliente': cognome_cliente, 'telefono': telefono, 'Data_abbonamento': Data_abbonamento}
         date = self.socioView.modificaSocio.datarinnovo.text()
-        print(date)
+
         if len(date.split("-", 4)) == 3 and date.split("-", 4):
-            print("entrato")
+
             self.tableSocio.modifyQuery(params)
             self.socioView.sociModificaCorretto()
+            return 1
         else:
             self.socioView.sociModificaWarn()
+            return 2
 
 
 

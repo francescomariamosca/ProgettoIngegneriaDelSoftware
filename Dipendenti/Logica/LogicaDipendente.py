@@ -24,12 +24,12 @@ class LogicaDipendente(QMainWindow):
         self.dipendenteView.homeDipendenti.setupUi(self.window)
         self.loadTableDipendenti()
         self.window.show()
-        print("fatto")
+
 
 
         #funzioni per tornare alla home da gestione dipendenti
         self.dipendenteView.homeDipendenti.tornahome.clicked.connect(self.window.close)
-        print("fatto")
+
 
         self.dipendenteView.homeDipendenti.tornahome.clicked.connect(self.home.mostra)
 
@@ -46,7 +46,7 @@ class LogicaDipendente(QMainWindow):
 
     #funzione per richiamare i bottoni
     def passaBottoniDip(self):
-        print("fatto")
+
         self.dipendenteView.homeDipendenti.aggiungidip.clicked.connect(self.passaInserisciDip)
         self.dipendenteView.homeDipendenti.eliminadip.clicked.connect(self.passaEliminaDip)
         self.dipendenteView.homeDipendenti.modificainfodip.clicked.connect(self.passaRicercaDip)
@@ -137,7 +137,7 @@ class LogicaDipendente(QMainWindow):
 
     def caricaDipendente(self):
         cf, nome, cognome, citta, tel, mansione, ore, stip, username = self.resultSearch
-        print(cf, nome, cognome, citta, tel, mansione, ore, stip, username)
+
         oreText = str(ore)
         stipText = str(stip)
 

@@ -40,7 +40,7 @@ class LiquiditaView(QMainWindow):
             return idLiquidita
 
     def enableFields(self):
-        print("dentro")
+
         tipologia = self.homeLidquidita.tipologia.currentText()
         idFornitore = self.homeLidquidita.idfornitore
         idSocio = self.homeLidquidita.idsocio

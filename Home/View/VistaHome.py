@@ -158,7 +158,7 @@ class VistaHome(object):
 "background-color: rgb(221, 214, 73);\n"
 "border: 3px solid white;\n"
 "")
-        self.contabilita.setObjectName("contabilita")
+        self.contabilita.setObjectName("Liquidità")
         self.gridLayout.addWidget(self.contabilita, 0, 1, 1, 1)
         self.campi = QtWidgets.QPushButton(self.gridLayoutWidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
@@ -206,7 +206,7 @@ class VistaHome(object):
         self.soci.setText(_translate("MainWindow", "Gestione Soci"))
         self.fornitori.setText(_translate("MainWindow", "Gestione Fornitori"))
         self.sicurezza.setText(_translate("MainWindow", "Sicurezza"))
-        self.contabilita.setText(_translate("MainWindow", "Gestione Contabilità"))
+        self.contabilita.setText(_translate("MainWindow", "Gestione Liquidità"))
         self.campi.setText(_translate("MainWindow", "Prenotazione Campi"))
 
     def passaDipendenti(self):

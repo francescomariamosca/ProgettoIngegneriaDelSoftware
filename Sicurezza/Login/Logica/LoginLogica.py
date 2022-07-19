@@ -17,6 +17,8 @@ class LoginLogica():
 
         if result == 0:
             self.loginView.WarningMessage()
+            return 0
         else:
             self.loginView.window.close()
             self.home.mostra()
+            return 1
