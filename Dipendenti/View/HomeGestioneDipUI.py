@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class HomeGestioneDipUI(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1907, 1202)
+        MainWindow.resize(2000, 1200)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
@@ -219,14 +219,14 @@ class HomeGestioneDipUI(object):
         item.setText(_translate("MainWindow", "Username"))
         self.modificainfodip.setText(_translate("MainWindow", "Modifica Info Dipendente"))
         self.eliminadip.setText(_translate("MainWindow", " Elimina Dipendente"))
-        self.tabelladip.setColumnWidth(0, 200)
-        self.tabelladip.setColumnWidth(1, 200)
-        self.tabelladip.setColumnWidth(2, 230)
-        self.tabelladip.setColumnWidth(3, 200)
-        self.tabelladip.setColumnWidth(4, 200)
-        self.tabelladip.setColumnWidth(5, 200)
-        self.tabelladip.setColumnWidth(6, 150)
-        self.tabelladip.setColumnWidth(7, 240)
-        self.tabelladip.setColumnWidth(8, 200)
+        self.tabelladip.setColumnWidth(0, 250)
+        self.tabelladip.setColumnWidth(1, 250)
+        self.tabelladip.setColumnWidth(2, 250)
+        self.tabelladip.setColumnWidth(3, 250)
+        self.tabelladip.setColumnWidth(4, 250)
+        self.tabelladip.setColumnWidth(5, 250)
+        self.tabelladip.setColumnWidth(6, 250)
+        self.tabelladip.setColumnWidth(7, 250)
+        self.tabelladip.setColumnWidth(8, 250)
 
 

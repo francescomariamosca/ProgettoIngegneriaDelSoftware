@@ -9,25 +9,29 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QLabel
+
 
 class VistaHomeCampiUI(object):
+
+
     def setupUi(self, MainWindow):
 
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1408, 831)
+        MainWindow.resize(1408, 750)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout_3 = QtWidgets.QGridLayout(self.centralwidget)
         self.gridLayout_3.setObjectName("gridLayout_3")
         self.annomesegiorno = QtWidgets.QLabel(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.annomesegiorno.sizePolicy().hasHeightForWidth())
         self.annomesegiorno.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setFamily("Yu Gothic UI Semibold")
-        font.setPointSize(18)
+        font.setPointSize(26)
         font.setBold(True)
         font.setWeight(75)
         self.annomesegiorno.setFont(font)
@@ -539,9 +543,13 @@ class VistaHomeCampiUI(object):
         self.prenotacampo.setText(_translate("MainWindow", "Prenota"))
         self.label_9.setText(_translate("MainWindow", "Seleziona l\'azione:"))
         self.eliminaprenotazione.setText(_translate("MainWindow", "Elimina Prenotazione"))
-        self.campitennis.setColumnWidth(0, 170)
-        self.campitennis.setColumnWidth(1, 170)
-        self.campipadel.setColumnWidth(0, 170)
-        self.campipadel.setColumnWidth(1, 170)
+
+        self.campitennis.setColumnWidth(0, 200)
+        self.campitennis.setColumnWidth(1, 200)
+
+        self.campipadel.setColumnWidth(0, 200)
+        self.campipadel.setColumnWidth(1, 200)
+
         self.tabellasocicampi.setColumnWidth(1, 250)
+
         self.calcetto.setColumnWidth(0, 300)

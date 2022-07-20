@@ -23,6 +23,8 @@ class LogicaSocio(QMainWindow):
         self.listAbbonamento = []
         self.called = True
 
+
+    #metodo utilizzato per far funzionare i test
     def init_view(self):
         super(QMainWindow, self).__init__()
         self.socioView = SociView()

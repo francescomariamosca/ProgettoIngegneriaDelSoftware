@@ -12,8 +12,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 class HomeFornitoriUI(object):
     def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1800, 590)
+
+        MainWindow.setObjectName("Home Fornitori")
+        MainWindow.resize(1500, 900)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)

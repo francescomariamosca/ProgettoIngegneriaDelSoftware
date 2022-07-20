@@ -136,5 +136,5 @@ class GestioneUtentiUI(object):
         self.tornahome.setText(_translate("MainWindow", "Torna alla Home"))
         self.aggutente.setText(_translate("MainWindow", "Aggiungi Utente"))
         self.eliminautente.setText(_translate("MainWindow", "Elimina Utente"))
-        self.tabellaUtente.setColumnWidth(0, 300)
-        self.tabellaUtente.setColumnWidth(1, 300)
+        self.tabellaUtente.setColumnWidth(0, 350)
+        self.tabellaUtente.setColumnWidth(1, 350)

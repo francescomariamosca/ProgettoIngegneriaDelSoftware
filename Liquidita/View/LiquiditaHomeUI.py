@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class LiquiditaHomeUI(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1600, 1400)
+        MainWindow.resize(1600, 1000)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.centralwidget)
@@ -392,3 +392,16 @@ class LiquiditaHomeUI(object):
         item = self.tabfornitori.horizontalHeaderItem(1)
         item.setText(_translate("MainWindow", "Nome Fornitore"))
         self.tornahome.setText(_translate("MainWindow", "Torna alla Home"))
+
+        self.tabsoci.setColumnWidth(0, 250)
+        self.tabsoci.setColumnWidth(1, 250)
+
+        self.tabfornitori.setColumnWidth(0, 250)
+        self.tabfornitori.setColumnWidth(1, 250)
+
+        self.tabliquidita.setColumnWidth(0, 150)
+        self.tabliquidita.setColumnWidth(1, 150)
+        self.tabliquidita.setColumnWidth(2, 150)
+        self.tabliquidita.setColumnWidth(3, 150)
+        self.tabliquidita.setColumnWidth(4, 150)
+        self.tabliquidita.setColumnWidth(5, 150)

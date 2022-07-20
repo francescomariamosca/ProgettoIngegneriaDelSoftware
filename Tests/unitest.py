@@ -50,6 +50,8 @@ class TestSoftware(unittest.TestCase):
         checkresult = loginlogica.CheckLogin()
         self.assertEqual(checkresult,0)
 
+
+
     #testo la modifica dei dati di un socio
     def test_modificaCredenzialiSocio(self):
 
