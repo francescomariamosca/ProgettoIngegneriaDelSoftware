@@ -57,12 +57,12 @@ class TestSoftware(unittest.TestCase):
             def __init__(self):
                 class DataRinnovoMockUp:
                     def text(self):
-                        return '04-03-2020'
+                        return '2022-10-03'
                 class ModificaSocioMockUp:
                     datarinnovo = DataRinnovoMockUp()
                 self.modificaSocio = ModificaSocioMockUp()
             def getModificaLineEdit(self):
-                return '8', 'newtest@socio.com','NEWCFTEST', 'newtestnome', 'newtestcognome', '86346445', '04-03-2013'
+                return '8', 'newtest@socio.com','NEWCFTEST', 'newtestnome', 'newtestcognome', '86346445', '2022-10-03'
             def sociModificaCorretto(self):
                 pass
 

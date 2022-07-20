@@ -28,16 +28,12 @@ class LogicaSocio(QMainWindow):
         self.socioView = SociView()
 
     def passaSoci(self):
-        #from Home.View.Home import Home
-        #self.home = Home()
-
         self.window = QtWidgets.QMainWindow()
         self.socioView.homeSoci.setupUi(self.window)
         self.loadsocioTable()
         self.window.show()
         if self.called == False:
             self.infoScadenzAbbonamento()
-
 
         self.socioView.homeSoci.tornahome.clicked.connect(self.window.close)
         self.socioView.homeSoci.tornahome.clicked.connect(self.home.mostra)
@@ -218,13 +214,16 @@ class LogicaSocio(QMainWindow):
 
     def loadsocioTable(self):
 
-        allSoci = self.tableSocio.loadDataCampi()
+        allSoci = self.tableSocio.loadData()
+        print(allSoci)
         rowindex = 0
         self.socioView.homeSoci.tabellasoci.setRowCount(50)
+        print("eccezione")
 
         for row in allSoci:
             id_cliente = row[0]
             converted_id = str(id_cliente)
+            print(converted_id)
             self.socioView.homeSoci.tabellasoci.setItem(rowindex, 0, QtWidgets.QTableWidgetItem(converted_id))
             self.socioView.homeSoci.tabellasoci.setItem(rowindex, 1, QtWidgets.QTableWidgetItem(row[1]))
             self.socioView.homeSoci.tabellasoci.setItem(rowindex, 2, QtWidgets.QTableWidgetItem(row[2]))

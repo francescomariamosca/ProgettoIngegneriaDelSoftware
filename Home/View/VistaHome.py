@@ -213,6 +213,7 @@ class VistaHome(object):
         self.dipendenti.clicked.connect(self.logicaDipendente.passaDipendenti)
 
     def passaSoci(self):
+
         self.soci.clicked.connect(self.logicaSoci.passaSoci)
 
     def passaUtenti(self):
