@@ -22,6 +22,9 @@ class FornitoriView(QMainWindow):
     def messageWarningInserimento(self):
         self.message = QMessageBox.warning(self, " ATTENZIONE! ", "Stai inserendo un fornitore che ha lo stesso id di un altro!")
 
+    def idWarn(self):
+        self.message = QMessageBox.warning(self, " ATTENZIONE! ", "L'id del fornitore corrisponde ad un fornitore già esistente oppure non è un numero!")
+
     def messageCorrettaEliminazione(self):
         self.message = QMessageBox.information(self, " PERFETTO! ", " Il fornitore è stato eliminato correttamente! ")
 
@@ -39,6 +42,8 @@ class FornitoriView(QMainWindow):
 
     def getInserisciFornitoreLineEdit(self):
         id_fornitore = self.inserisciFornitore.idfornitore.text()
+        if id_fornitore.isdigit() is False and id_fornitore != "":
+            return 0
         nome = self.inserisciFornitore.nomeazienda.text()
         email = self.inserisciFornitore.emailazienda.text()
         telefono = self.inserisciFornitore.telefonoazienda.text()
@@ -67,7 +72,7 @@ class FornitoriView(QMainWindow):
 
     def getModificaLineEdit(self):
         id_forn = self.modificaFornitore.idfornitore.text()
-        nome =  self.modificaFornitore.nomeazienda.text()
+        nome = self.modificaFornitore.nomeazienda.text()
         email = self.modificaFornitore.emailazienda.text()
         tel = self.modificaFornitore.telefonoazienda.text()
         settore = self.modificaFornitore.settore.text()

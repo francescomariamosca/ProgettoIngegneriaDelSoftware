@@ -95,15 +95,18 @@ class LogicaFornitore(QMainWindow):
         self.fornitoreView.modificaFornitore.tornafornitori.clicked.connect(self.passaFornitori)
 
     def inserisciFornitore(self):
-        id_fornitore, nome, email, telefono, settore, citta, via = self.fornitoreView.getInserisciFornitoreLineEdit()
-        params = {'id_fornitore': id_fornitore, 'nome': nome, 'email': email, "telefono": telefono, "settore": settore,
-                  "citta": citta, "via": via}
-        result = self.tableFornitore.insertQuery(params)
-        print(result)
-        if result == 0:
-            self.fornitoreView.messageCorrettoInserimento()
+        if (self.fornitoreView.getInserisciFornitoreLineEdit() == 0):
+            self.fornitoreView.idWarn()
         else:
-            self.fornitoreView.messageWarningInserimento()
+            id_fornitore, nome, email, telefono, settore, citta, via = self.fornitoreView.getInserisciFornitoreLineEdit()
+            params = {'id_fornitore': id_fornitore, 'nome': nome, 'email': email, "telefono": telefono, "settore": settore,
+                      "citta": citta, "via": via}
+            result = self.tableFornitore.insertQuery(params)
+            print(result)
+            if result == 0:
+                self.fornitoreView.messageCorrettoInserimento()
+            else:
+                self.fornitoreView.messageWarningInserimento()
 
     def eliminaFornitore(self):
         id_fornitore = self.fornitoreView.getEliminaFornitoreLineEdit()
@@ -128,6 +131,7 @@ class LogicaFornitore(QMainWindow):
         id_fornitore, nome, email, telefono, settore, citta, via = self.resultSearch
         id_fornitore2 = str(id_fornitore)
         self.fornitoreView.modificaFornitore.idfornitore.setText(id_fornitore2)
+        self.fornitoreView.modificaFornitore.idfornitore.setEnabled(False)
         self.fornitoreView.modificaFornitore.nomeazienda.setText(nome)
         self.fornitoreView.modificaFornitore.emailazienda.setText(email)
         self.fornitoreView.modificaFornitore.telefonoazienda.setText(telefono)

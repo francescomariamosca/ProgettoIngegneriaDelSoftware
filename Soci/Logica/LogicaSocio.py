@@ -109,18 +109,21 @@ class LogicaSocio(QMainWindow):
         self.socioView.modificaSocio.tornagestionesoci.clicked.connect(self.socioView.homeSoci.window.hide)
 
     def inserisciSocio(self):
-        id_socio, e_mail, CF, nome_cliente, cognome_cliente, telefono, Data_abbonamento = self.socioView.getInserisciLineEdit()
-        params = {'id_socio': id_socio, 'e_mail': e_mail, 'CF': CF, 'nome_cliente': nome_cliente, 'cognome_cliente': cognome_cliente, 'telefono' : telefono, 'Data_abbonamento': Data_abbonamento}
-        date = self.socioView.inserisciSocio.datarinnovo.text()
-
-        if len(date.split("-", 4)) == 3 and date.split("-", 4):
-                result = self.tableSocio.insertQuery(params)
-                if result == 0:
-                    self.socioView.sociInserimentoCorretto()
-                else:
-                    self.socioView.dateErrore()
+        if(self.socioView.getInserisciLineEdit() == 0):
+            self.socioView.idWarn()
         else:
-                self.socioView.dateErrore()
+            id_socio, e_mail, CF, nome_cliente, cognome_cliente, telefono, Data_abbonamento = self.socioView.getInserisciLineEdit()
+            params = {'id_socio': id_socio, 'e_mail': e_mail, 'CF': CF, 'nome_cliente': nome_cliente, 'cognome_cliente': cognome_cliente, 'telefono' : telefono, 'Data_abbonamento': Data_abbonamento}
+            date = self.socioView.inserisciSocio.datarinnovo.text()
+
+            if len(date.split("-", 4)) == 3 and date.split("-", 4):
+                    result = self.tableSocio.insertQuery(params)
+                    if result == 0:
+                        self.socioView.sociInserimentoCorretto()
+                    else:
+                        self.socioView.dateErrore()
+            else:
+                    self.socioView.dateErrore()
 
 
     def eliminaSocio(self):

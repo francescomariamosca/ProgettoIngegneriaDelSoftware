@@ -22,6 +22,9 @@ class SociView(QMainWindow):
     def sociInserimentoWarn(self):
         self.message = QMessageBox.warning(self, "ATTENZIONE!", "Il cliente che stai cercando di inserire è già presente nel Sistema oppure alcuni dati sono mancanti!")
 
+    def idWarn(self):
+        self.message = QMessageBox.warning(self, "ATTENZIONE!", "L'id del socio deve essere un numero non assegnato ad altri soci!")
+
     def dateErrore(self):
         self.message = QMessageBox.warning(self, "ATTENZIONE!", "Il formato della data che stai inserendo non è corretto!")
 
@@ -46,6 +49,8 @@ class SociView(QMainWindow):
 
     def getInserisciLineEdit(self):
         id_socio = self.inserisciSocio.idsocio.text()
+        if id_socio.isdigit() is False and id_socio != "":
+            return 0
         e_mail = self.inserisciSocio.email.text()
         CF = self.inserisciSocio.cfsocio.text()
         nome = self.inserisciSocio.nome.text()
