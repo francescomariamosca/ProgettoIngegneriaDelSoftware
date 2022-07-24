@@ -107,15 +107,18 @@ class LogicaDipendente(QMainWindow):
         self.dipendenteView.modificaDip.tornagestionedip.clicked.connect(self.passaDipendenti)
 
     def inserisciDipendente(self):
-        cf, nome, cognome, citta, tel, mansione, ore, stip, username = self.dipendenteView.getInserisciLineEdit()
-
-        params = {'cf': cf, 'nome': nome, 'cognome': cognome, 'citta': citta, 'tel': tel, 'mansione': mansione, 'ore': ore, 'stip': stip, 'username': username}
-
-        result = self.tableDipendenti.insertQuery(params)
-        if result == 0:
-            self.dipendenteView.messageInserimentoCorretto()
+        if self.dipendenteView.getInserisciLineEdit() == 0:
+            self.dipendenteView.typeWarning()
         else:
-            self.dipendenteView.messageWarningInserimento()
+            cf, nome, cognome, citta, tel, mansione, ore, stip, username = self.dipendenteView.getInserisciLineEdit()
+
+            params = {'cf': cf, 'nome': nome, 'cognome': cognome, 'citta': citta, 'tel': tel, 'mansione': mansione, 'ore': ore, 'stip': stip, 'username': username}
+
+            result = self.tableDipendenti.insertQuery(params)
+            if result == 0:
+                self.dipendenteView.messageInserimentoCorretto()
+            else:
+                self.dipendenteView.messageWarningInserimento()
 
     def eliminaDipendente(self):
         cf = self.dipendenteView.getEliminaLineEdit()
@@ -163,12 +166,15 @@ class LogicaDipendente(QMainWindow):
 
 
     def modificaInfoDip(self):
-        cf, nome, cognome, citta, tel, mansione, ore, stip, username = self.dipendenteView.getModificaLineEdit()
-        params = {'cf': cf, 'nome': nome, 'cognome': cognome, 'citta': citta, 'tel': tel, 'mansione': mansione, 'ore': ore, 'stip': stip, 'username': username}
-
-        self.tableDipendenti.modifyQuery(params)
-        self.dipendenteView.messageCorrettoModify()
-        self.passaDipendenti()
+        if self.dipendenteView.getModificaLineEdit() == 0:
+            self.dipendenteView.messageWarningModify()
+            self.passaDipendenti()
+        else:
+            cf, nome, cognome, citta, tel, mansione, ore, stip, username = self.dipendenteView.getModificaLineEdit()
+            params = {'cf': cf, 'nome': nome, 'cognome': cognome, 'citta': citta, 'tel': tel, 'mansione': mansione, 'ore': ore, 'stip': stip, 'username': username}
+            self.tableDipendenti.modifyQuery(params)
+            self.dipendenteView.messageCorrettoModify()
+            self.passaDipendenti()
 
     def loadTableDipendenti(self):
         queryResult = self.tableDipendenti.loadData()

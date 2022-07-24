@@ -121,6 +121,7 @@ class ModificaDipUI(object):
 "border: 3px solid white;")
         self.cellularedip.setText("")
         self.cellularedip.setObjectName("cellularedip")
+        self.cellularedip.setMaxLength(10)
         self.gridLayout.addWidget(self.cellularedip, 5, 0, 1, 1)
         self.label_9 = QtWidgets.QLabel(self.layoutWidget)
         font = QtGui.QFont()
@@ -190,6 +191,7 @@ class ModificaDipUI(object):
 "background-color: rgb(221, 214, 73);\n"
 "border: 3px solid white;")
         self.cf.setObjectName("cf")
+        self.cf.setEnabled(False)
         self.gridLayout.addWidget(self.cf, 1, 0, 1, 1)
         self.cittadip = QtWidgets.QLineEdit(self.layoutWidget)
         font = QtGui.QFont()

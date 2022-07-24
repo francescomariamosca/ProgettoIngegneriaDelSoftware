@@ -88,6 +88,7 @@ class InserisciDipUI(object):
 "border: 3px solid white;")
         self.cellularedip.setText("")
         self.cellularedip.setObjectName("cellularedip")
+        self.cellularedip.setMaxLength(10)
         self.gridLayout.addWidget(self.cellularedip, 5, 0, 1, 1)
         self.label_9 = QtWidgets.QLabel(self.centralwidget)
         font = QtGui.QFont()

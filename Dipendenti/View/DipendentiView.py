@@ -37,16 +37,26 @@ class DipendentiView(QMainWindow):
     def messageWarningModify(self):
         self.message = QMessageBox.warning(self, " ATTENZIONE! ", "Impossibile effettuare la modifica!")
 
+    def typeWarning(self):
+        self.message = QMessageBox.warning(self, "ATTENZIONE! ", "Alcuni campi devono essere numerici")
+
 
     def getInserisciLineEdit(self):
         cf = self.inserisciDip.cf.text()
         nome = self.inserisciDip.nomedip.text()
         cognome = self.inserisciDip.congomedip.text()
         citta = self.inserisciDip.cittadip.text()
+
         tel = self.inserisciDip.cellularedip.text()
+        if tel.isdigit() is False and tel !="":
+            return 0
         mansione = self.inserisciDip.mansionedip.text()
         ore = self.inserisciDip.oredip.text()
+        if ore.isdigit() is False:
+            return 0
         stip = self.inserisciDip.stipendiodip.text()
+        if stip.isdigit() is False:
+            return 0
         username = self.inserisciDip.usernamedip.text()
 
         return cf, nome, cognome, citta, tel, mansione, ore, stip, username
@@ -75,11 +85,18 @@ class DipendentiView(QMainWindow):
         nome = self.modificaDip.nomedip.text()
         cognome = self.modificaDip.congomedip.text()
         citta = self.modificaDip.cittadip.text()
+
         telefono = self.modificaDip.cellularedip.text()
+        if telefono.isdigit() is False and telefono != "":
+            return 0
         mansione = self.modificaDip.mansionedip.text()
+
         ore = self.modificaDip.oredip.text()
+        if ore.isdigit() is False:
+            return 0
         stip = self.modificaDip.stipendiodip.text()
+        if stip.isdigit() is False:
+            return 0
         username = self.modificaDip.usernamedip.text()
-        print(cf, nome, cognome, citta, telefono, mansione, ore, stip, username)
 
         return cf, nome, cognome, citta, telefono, mansione, ore, stip, username
