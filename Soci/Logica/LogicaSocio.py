@@ -34,10 +34,11 @@ class LogicaSocio(QMainWindow):
         self.socioView.homeSoci.setupUi(self.window)
         self.loadsocioTable()
         self.window.show()
-        if self.called == False:
-            self.infoScadenzAbbonamento()
+        # if self.called == False:
+        #    self.infoScadenzAbbonamento()
 
         self.socioView.homeSoci.tornahome.clicked.connect(self.window.close)
+
         self.socioView.homeSoci.tornahome.clicked.connect(self.home.mostra)
 
         self.socioView.homeSoci.aggsocio.clicked.connect(self.window.close)
@@ -188,34 +189,36 @@ class LogicaSocio(QMainWindow):
 
 
 
-    def infoScadenzAbbonamento(self):
-        today = datetime.datetime.today()
-        print(today)
-
-        query = "SELECT Data_abbonamento, id_socio, e_mail, nome_cliente, cognome_cliente from Soci"
-
-        for row in self.tableSocio.c.execute(query):
-            dataAbbonamento = row[0]
-            id_socio = row[1]
-            email = row[2]
-            nome = row[3]
-            cognome = row[4]
-            self.listAbbonamento.append((dataAbbonamento, id_socio, email, nome, cognome))
-        print(self.listAbbonamento)
-
-
-
-        for data, id, email, nome, cognome in self.listAbbonamento:
-
-            result = datetime.datetime.strptime(data, "%Y-%m-%d")
-            y = today - result
-            delta = datetime.timedelta(335)
-            if y > delta:
-                self.socioView.scadenzaAbbonamento(id, email)
-                self.email.emailScadenzaAbbonamento(email, nome, cognome)
-
-        self.listAbbonamento.clear()
-        self.called = True
+    # def infoScadenzAbbonamento(self):
+    #     print("ciao")
+    #     today = datetime.datetime.today()
+    #     print(today)
+    #
+    #     query = "SELECT Data_abbonamento, id_socio, e_mail, nome_cliente, cognome_cliente from Soci"
+    #
+    #     for row in self.tableSocio.c.execute(query):
+    #         dataAbbonamento = row[0]
+    #         id_socio = row[1]
+    #         email = row[2]
+    #         nome = row[3]
+    #         cognome = row[4]
+    #         self.listAbbonamento.append((dataAbbonamento, id_socio, email, nome, cognome))
+    #     print(self.listAbbonamento)
+    #
+    #
+    #
+    #     for data, id, email, nome, cognome in self.listAbbonamento:
+    #
+    #         result = datetime.datetime.strptime(data, "%Y-%m-%d")
+    #         y = today - result
+    #         delta = datetime.timedelta(335)
+    #         print(y)
+    #         if y > delta:
+    #             self.socioView.scadenzaAbbonamento(id, email)
+    #             self.email.emailScadenzaAbbonamento(email, nome, cognome)
+    #
+    #     self.listAbbonamento.clear()
+    #     self.called = True
 
     def loadsocioTable(self):
 

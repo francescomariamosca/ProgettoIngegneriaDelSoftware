@@ -1,5 +1,3 @@
-
-
 from Soci.Logica.LogicaSocio import LogicaSocio
 from GestioneDatabase.QuerySicurezza.TableSicurezza import TableSicurezza
 from Sicurezza.Login.Logica.LoginLogica import LoginLogica
